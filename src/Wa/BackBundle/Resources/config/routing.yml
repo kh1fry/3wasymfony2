@@ -21,3 +21,7 @@ wa_back_etudiant:
 wa_back_homepage:
     path:     /
     defaults: { _controller: WaBackBundle:Main:admin }
+
+wa_back_feedback:
+    path:     /feedback
+    defaults: { _controller: WaBackBundle:Main:feedback }

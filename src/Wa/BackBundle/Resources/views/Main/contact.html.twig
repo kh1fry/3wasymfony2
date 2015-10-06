@@ -5,7 +5,51 @@
 {% block body %}
     {{ parent() }}
     <h1>Contact</h1>
+    {# la variable ci-dessous affiche mon prénom #}
+    {% if prenom == "yannick" %}
+        <p>Oui c'est bien moi</p>
+    {% endif %}
+    {{ prenom }}
+    {# affiche l'intégralité du formulaire
+    {{ form(formulaireContact) }}
+    #}
 
-    <a href="{{ path('wa_back_about') }}">About</a><br />
-    <a href="{{ path('wa_back_produit_show', {'id': 12}) }}">Show Produit</a><br />
+    {#
+    foreach ($app->session->flashbag->get("sucess_contact") as $flashMessage)
+    {
+        echo $flashMessage;
+    }
+    #}
+
+    {# génère la balise <form> du formulaire contact #}
+    {{ form_start(formulaireContact) }}
+        {#
+            {{ form_row(formulaireContact.email) }}
+            Ceci est égale au trois lignes du dessous
+        #}
+        {#Pour un label#}
+        {{ form_label(formulaireContact.lastname, "Nom", {label_attr:{class:"form-label"}}) }}
+        {#Pour un input#}
+        {{ form_widget(formulaireContact.lastname,{attr:{class:"form-control"}, id:"form_lastname"}) }}
+        {{ form_errors(formulaireContact.lastname) }}
+
+        {#Pour un label#}
+        {{ form_label(formulaireContact.firstname, "Prénom", {label_attr:{class:"form-label"}}) }}
+        {#Pour un input#}
+        {{ form_widget(formulaireContact.firstname,{attr:{class:"form-control"}, id:"form_firstname"}) }}
+        {{ form_errors(formulaireContact.firstname)}}
+
+        {#Pour un label#}
+        {{ form_label(formulaireContact.email, "Email", {label_attr:{class:"form-label"}}) }}
+        {#Pour un input#}
+        {{ form_widget(formulaireContact.email,{attr:{class:"form-control"}, id:"form_email"}) }}
+        {{ form_errors(formulaireContact.email) }}
+
+    {{ form_end(formulaireContact) }}
+
+    {% for flashMessage in app.session.flashbag.get("sucess_contact") %}
+        <div class="alert alert-success alert-dismissable">{{ flashMessage }}</div>
+
+    {% endfor%}
+
 {% endblock %}

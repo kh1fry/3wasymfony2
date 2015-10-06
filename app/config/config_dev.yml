@@ -44,5 +44,16 @@ monolog:
 assetic:
     use_controller: true
 
-#swiftmailer:
+#Tout les msg envoyés iront sur cette adresse
 #    delivery_address: me@example.com
+swiftmailer:
+    transport: gmail
+    username:  Login
+    password:  Mot de passe
+
+    transport: smtp
+    encryption: ssl
+    auth_mode:  login
+    host:       smtp.gmail.com
+    username:   Login
+    password:   Mot de passe
