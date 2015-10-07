@@ -1,5 +1,14 @@
 {% extends 'WaBackBundle::layout.html.twig' %}
-{% block body %}
+{% block stylesheets %}
+    {{ parent() }}
+
+    <!-- Theme style personnalisé -->
+    <link rel="stylesheet" href="{{ asset('plugins/jvectormap/jquery-jvectormap-1.2.2.css') }}">
+    <!-- Theme style -->
+{% endblock %}
+
+
+{% block content %}
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
@@ -95,3 +104,10 @@
         <li><a href="{{ path('wa_back_categorie_show', {'id': categorie.id}) }}">{{ categorie.title }}</a>
     {% endfor %}
 {% endblock %}
+{% block javascript %}
+    {{ parent()}}
+    <!-- jvectormap -->
+    <script src="{{ asset('plugins/jvectormap/jquery-jvectormap-1.2.2.min.js') }}"></script>
+    <script src="{{ asset('plugins/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
+    <!-- SlimScroll 1.3.0 -->
+{% endblock%}

@@ -4,8 +4,8 @@ namespace Wa\BackBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-
-//use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class MainController extends Controller
 {
@@ -68,25 +68,38 @@ class MainController extends Controller
         return $this->render('WaBackBundle:Main:admin.html.twig',
             array('categories' => $categories, 'products' => $products)
         );
-
     }
 
     public function contactAction(Request $request)
     {
         $formulaireContact= $this-> createFormBuilder()
-                            //Ajout champs formulaire
-                            ->add("firstname","text")
-                            ->add("lastname","text")
-                            ->add("email","email")
+                            //Ajout champ ("nom champs","type de champs)
+                            ->add("firstname","text", ["constraints"=>
+                                        //Si rien dans firstname => error
+                                        [new Assert\NotBlank()],"required"=>false])
+                            ->add("lastname","text", ["constraints"=>new Assert\NotBlank()])
+                            ->add("email","email",
+                                [
+                                    "constraints"=>
+                                    [
+                                        new Assert\NotBlank((["message"=>"Entrer un email"])),
+                                        new Assert\Email(
+                                            [
+                                                "message"=>"Email invalide",
+                                                "checkMX"=> true,
+                                            ]
+                                        )
+                                    ]
+                                ])
                             ->add("content","textarea")
                             ->add("send","submit")
                             //Récupérer le formulaire
                             ->getForm();
         //Test l'égalité et le type
-        if("POST" === $request->getMethod()){
-            //die(dump($request->request->all()));
-            $formulaireContact->bind($request);
-
+        $formulaireContact-> handleRequest($request);
+            //Vérifie si le conditions form sont valide
+            //ainsi que faille csrf pr voir si le token est bien le nôtre
+            //et que c'est la bonne méthode 'POST'
             if($formulaireContact->isValid()) {
 
                 $data = $formulaireContact->getData();
@@ -110,7 +123,6 @@ class MainController extends Controller
 
                 return  $this->redirectToRoute("wa_back_contact");
             }
-        }
         return $this->render('WaBackBundle:Main:contact.html.twig',["formulaireContact"=>$formulaireContact->createView(), "prenom" => "yannick"]);
 
     }

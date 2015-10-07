@@ -1,8 +1,19 @@
+{#Bundle::=dossier#}
 {% extends 'WaBackBundle::layout.html.twig' %}
+{% form_theme formulaireContact _self%}
+{%- block form_errors -%}
+    {%- if errors|length > 0 -%}
+        <p>
+            {%- for error in errors -%}
+                {{ error.message }}
+            {%- endfor -%}
+        </p>
+    {%- endif -%}
+{%- endblock form_errors -%}
 
 {% block title %}Admin Contact - Application{% endblock %}
 
-{% block body %}
+{% block content %}
     {{ parent() }}
     <h1>Contact</h1>
     {# la variable ci-dessous affiche mon prénom #}
@@ -21,18 +32,23 @@
     }
     #}
 
-    {# génère la balise <form> du formulaire contact #}
-    {{ form_start(formulaireContact) }}
+    {# génère la balise <form> du formulaire contact, {désactive validatation de tout le form #}
+    {{ form_start(formulaireContact, {attr:{novalidate:"novalidate"}}) }}
         {#
             {{ form_row(formulaireContact.email) }}
             Ceci est égale au trois lignes du dessous
         #}
+    {% if formulaireContact.lastname.vars.errors | length %}
+        <div class="form-group has-error">
+    {% endif %}
         {#Pour un label#}
         {{ form_label(formulaireContact.lastname, "Nom", {label_attr:{class:"form-label"}}) }}
         {#Pour un input#}
         {{ form_widget(formulaireContact.lastname,{attr:{class:"form-control"}, id:"form_lastname"}) }}
         {{ form_errors(formulaireContact.lastname) }}
-
+    {% if formulaireContact.lastname.vars.errors | length %}
+        </div>
+    {% endif %}
         {#Pour un label#}
         {{ form_label(formulaireContact.firstname, "Prénom", {label_attr:{class:"form-label"}}) }}
         {#Pour un input#}

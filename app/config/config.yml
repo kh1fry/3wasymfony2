@@ -35,6 +35,11 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    form:
+        resources:
+            - "bootstrap_3_layout.html.twig"
+            #appliquer partout les custom form
+            #- "WaBackBundle:FormGlobal:fields.html.twig"
 
 # Assetic Configuration
 assetic:
