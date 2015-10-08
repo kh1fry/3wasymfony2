@@ -2,10 +2,6 @@ wa_back_categorie:
     resource: "@WaBackBundle/Resources/config/routes/categorie.yml"
     prefix:   /categorie
 
-wa_back_produit:
-    resource: "@WaBackBundle/Resources/config/routes/produit.yml"
-    prefix:   /produit
-
 wa_back_about:
     path: /about
     defaults: { _controller: WaBackBundle:Main:about }
@@ -25,3 +21,8 @@ wa_back_homepage:
 wa_back_feedback:
     path:     /feedback
     defaults: { _controller: WaBackBundle:Main:feedback }
+
+
+wa_back_produit_creation:
+    path: /produit/creation
+    defaults: { _controller: WaBackBundle:Produit:create }
