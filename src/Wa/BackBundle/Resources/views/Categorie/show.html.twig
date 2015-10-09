@@ -1,13 +1,13 @@
 {% extends 'WaBackBundle::layout.html.twig' %}
 
 {% block title %}
-    Categorie {{ categorie.title }} {{ parent() }}
+    coucou
 {% endblock %}
 
 {% block content %}
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Catégorie {{ categorie.title }} <span class="label label-success">{{ categorie.active }}</span></h3>
+            <h3 class="box-title">} <span class="label label-success"></span></h3>
             <div class="box-tools pull-right">
                 <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
                 <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
@@ -20,5 +20,5 @@
             Identifiant {{ categorie.id }}
         </div><!-- /.box-footer-->
     </div>
-    <a href="{{ path('wa_back_categorie_list') }}" class="btn btn-block btn-default">Retourner à la liste des catégories</a>
+    <a href="" class="btn btn-block btn-default">Retourner à la liste des catégories</a>
 {% endblock %}

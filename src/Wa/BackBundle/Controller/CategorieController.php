@@ -33,7 +33,7 @@ class CategorieController extends Controller
             ],
         ];
 
-        return $this->render('WaBackBundle:Categorie:list.html.twig', array('categories' => $categories));
+        return $this->render('WaBackBundle:Categorie:index.html.twig', array('categories' => $categories));
 
     }
 

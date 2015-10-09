@@ -1,9 +1,0 @@
-wa_back_categorie_list:
-    path: /list
-    defaults: { _controller: WaBackBundle:Categorie:list }
-
-wa_back_categorie_show:
-    path: /show/{id}
-    defaults: { _controller: WaBackBundle:Categorie:show }
-    requirements:
-        id: \d+

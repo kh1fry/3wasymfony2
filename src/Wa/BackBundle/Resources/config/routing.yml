@@ -1,28 +1,33 @@
 wa_back_categorie:
-    resource: "@WaBackBundle/Resources/config/routes/categorie.yml"
+    resource: "@WaBackBundle/Resources/config/routing/categorie.yml"
     prefix:   /categorie
-
+# ENTRAINEMENT
 wa_back_about:
     path: /about
     defaults: { _controller: WaBackBundle:Main:about }
 
-wa_back_contact:
-    path: /contact
-    defaults: { _controller: WaBackBundle:Main:contact }
-
 wa_back_etudiant:
     path:     /etudiant/{firstname}/{lastname}
     defaults: { _controller: WaBackBundle:Etudiant:index }
+# FIN ENTRAINEMENT
+
+
 
 wa_back_homepage:
     path:     /
     defaults: { _controller: WaBackBundle:Main:admin }
 
+wa_back_contact:
+    path: /contact
+    defaults: { _controller: WaBackBundle:Main:contact }
+
 wa_back_feedback:
     path:     /feedback
     defaults: { _controller: WaBackBundle:Main:feedback }
 
+#Include vers les routes du fichier produit.yml
+wa_back_resource_produit:
+    resource: "@WaBackBundle/Resources/config/routing/produit.yml"
+    #Prefix définit le début des urls pr un fichier
+    prefix:   /
 
-wa_back_produit_creation:
-    path: /produit/creation
-    defaults: { _controller: WaBackBundle:Produit:create }

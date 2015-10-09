@@ -1,0 +1,21 @@
+wa_back_categorie_show:
+    path: /show/{id}
+    defaults: { _controller: WaBackBundle:Categorie:show }
+    requirements:
+        id: \d+
+
+wa_back_categorie_creation:
+    path: /produit/create
+    defaults: { _controller: WaBackBundle:Produit:create}
+
+wa_back_categorie:
+    path: /
+    defaults: { _controller: WaBackBundle:Produit:index}
+
+wa_back_categorie_update:
+    path: /produit/update/{id}
+    defaults: { _controller: WaBackBundle:Produit:update }
+
+categorie_delete:
+    path: /produit/delete/{id}
+    defaults: { _controller: WaBackBundle:Produit:delete }

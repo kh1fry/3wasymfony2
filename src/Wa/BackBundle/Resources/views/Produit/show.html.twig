@@ -5,10 +5,10 @@
 {% block content %}
     {{ parent() }}
 
-    <a href="{{ path('wa_back_produit_list') }}">Revenir à la liste des produits</a>
+    <a href="{{ path('wa_back_produit') }}">Revenir à la liste des produits</a>
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Produit {{ produit.title }} <span class="label label-success">{{ produit.prix }}</span></h3>
+            <h3 class="box-title">Produit {{ produit.title }} <span class="label label-success">{{ produit.price }}</span></h3>
             <div class="box-tools pull-right">
                 <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
                 <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
@@ -21,5 +21,9 @@
             Identifiant {{ produit.id }}
         </div><!-- /.box-footer-->
     </div>
-    <a href="{{ path('wa_back_produit_list') }}" class="btn btn-block btn-default">Retourner à la liste des produits</a>
+    <div class="btn-group">
+        <a href="" class="btn btn-warning">Editer</a>
+        <a href="{{ path('wa_back_produit_delete', {id:produit.id}) }}" class="btn btn-danger">Supprimer</a>
+    </div>
+
 {% endblock %}

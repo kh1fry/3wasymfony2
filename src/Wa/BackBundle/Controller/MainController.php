@@ -152,7 +152,7 @@ class MainController extends Controller
             if("POST" === $request->getMethod()) {
                 $formulaireFeedback->bind($request);
                 if($formulaireFeedback->isValid()) {
-                    $data = $formulaireContact->getData();
+                    $data = $formulaireFeedback->getData();
 
                     $message = \Swift_Message::newInstance()
                         ->setSubject('Hello Email')
