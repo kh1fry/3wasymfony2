@@ -10,4 +10,56 @@ namespace Wa\BackBundle\Entity;
  */
 class ProduitRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findAllPerso(){
+        //die("ok")
+        //SELECT * == SELECT prod
+        /*
+        $query= $this->getEntityManager()
+                    ->createQuery("
+                SELECT prod
+                FROM WaBackBundle:Produit prod
+        ");
+        */
+
+        $query= $this->createQueryBuilder("prod")
+                    ->getQuery();
+
+       // die(dump($query->getResult()));
+        return $query->getResult();
+    }
+
+    public function findPerso($id)
+    {
+
+        $query= $this->createQueryBuilder("prod")
+            ->where('prod.id = :idProd')
+            ->setParameter("idProd", $id)
+            ->getQuery();
+
+        die(dump($query->getSingleResult()));
+
+
+
+        /*Dans la clause WHERE idProd est une variable qui va contenir la valeur
+         parametre id*/
+
+        // _em = getEntityManager()
+        /*$query= $this->_em->createQuery("
+            SELECT prod
+            FROM WaBackBundle:Produit prod
+
+            WHERE prod.id= :idProd
+        ")
+        ->setParameter("idProd", $id);
+        /*
+         * permet d'avoir plusieurs arguments
+        ->setParameters(
+            [
+                "idProd" => $id,
+            ]
+        );
+        */
+
+        return $query->getSingleResult();
+    }
 }

@@ -21,18 +21,20 @@
                     <table class="table table-hover">
                         <tbody><tr>
                             <th>ID</th>
-                            <th>Intitulé</th>
-                            <th>Date</th>
+                            <th>Nom catégorie</th>
+                            <th>Description</th>
+                            <th>Position</th>
                             <th>Active</th>
-                            <th>Reason</th>
+
                         </tr>
                         {% for categorie in categories %}
                             <tr>
                                 <td>{{ categorie.id }}</td>
-                                <td><a href="{{ path('wa_back_categorie_show', {'id': categorie.id}) }}">{{ categorie.title }}</a></td>
-                                <td>{{ categorie.date_created|date }}</td>
-                                <td><span class="label label-success">{{ categorie.active }}</span></td>
-                                <td>{{ categorie.description|striptags|nl2br }} {{ categorie.date_created|date }}</td>
+                                <td>{{ categorie.title }}</td>
+                                <td>{{ categorie.description }}</td>
+                                <td>{{ categorie.position }}</td>
+                                <td>{{ categorie.active }}</td>
+
                             </tr>
                         {% endfor %}
 

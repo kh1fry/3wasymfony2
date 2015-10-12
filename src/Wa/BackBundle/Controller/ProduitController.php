@@ -3,6 +3,7 @@
 namespace Wa\BackBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Wa\BackBundle\Entity\Produit;
@@ -130,16 +131,19 @@ class ProduitController extends Controller
         return $this->render('WaBackBundle:Produit:formUpdateProduit.html.twig', ["formulaireProduit"=>$formProduit->createView()]);
     }
 
-    public function deleteAction($id){
+    public function deleteAction($id, Request $request){
+
         //Repository endroit ou il va chercher les requêtes personnalisées
         $em= $this->getDoctrine()->getManager();
         //Va regarder dans l'entité produit
         $produit= $em->getRepository("WaBackBundle:Produit")
                 ->find($id);
-        if(!$produit){throw $this->createNotFound("Produit inexistant !");}
+        if(!$produit){throw $this->createNotFoundException("Produit inexistant !");}
 
         $em->remove($produit);
         $em->flush();
+        //Si la requete et en ajax renvoyer quelque chose (booléan au autre pour confirmer que ça s'est bien passé)
+        if($request->isXmlHttpRequest()){return new JsonResponse();}
 
         return $this->redirectToRoute("wa_back_produit");
     }

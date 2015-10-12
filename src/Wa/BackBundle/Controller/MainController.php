@@ -12,7 +12,7 @@ class MainController extends Controller
 
     public function adminAction()
     {
-        $categories = [
+        /*$categories = [
             1 => [
                 "id" => 1,
                 "title" => "Homme",
@@ -64,10 +64,23 @@ class MainController extends Controller
                 "date_created" => new \DateTime('now'),
                 "prix" => 410
             ],
-        ];
-        return $this->render('WaBackBundle:Main:admin.html.twig',
-            array('categories' => $categories, 'products' => $products)
-        );
+        ];*/
+        //Doctrine pour gérer des bbd !=
+        //Manager pour gérer des bundles !=
+        $em= $this->getDoctrine()
+                ->getManager();
+
+        $productAll= $em->getRepository("WaBackBundle:Produit")
+                        // equivalent du ->findAll()
+                        ->findAllPerso();
+        //dump($productAll);
+        //die();
+
+        $product= $em->getRepository("WaBackBundle:Produit")
+            // equivalent de ->find(id)
+            ->findPerso(14);
+
+        return $this->render('WaBackBundle:Main:admin.html.twig', $productAll);
     }
 
     public function contactAction(Request $request)

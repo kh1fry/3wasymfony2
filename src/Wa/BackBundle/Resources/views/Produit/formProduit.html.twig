@@ -1,7 +1,10 @@
 {% extends 'WaBackBundle::layout.html.twig' %}
 {% block content %}
     {{ parent() }}
+
     <h1>Créer un produit</h1>
     {{ form_start(formulaireProduit, {attr : {novalidate:"novalidate"}} ) }}
+    {{ form_widget(formulaireProduit.dateCreated, {attr : {class:"datepicker"}} ) }}
+
     {{ form_end(formulaireProduit) }}
 {% endblock %}

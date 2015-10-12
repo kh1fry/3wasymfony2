@@ -1,6 +1,6 @@
 wa_back_categorie:
     resource: "@WaBackBundle/Resources/config/routing/categorie.yml"
-    prefix:   /categorie
+    prefix:   /
 # ENTRAINEMENT
 wa_back_about:
     path: /about

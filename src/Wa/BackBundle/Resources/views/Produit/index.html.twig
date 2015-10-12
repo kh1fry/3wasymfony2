@@ -19,7 +19,7 @@
                     </div>
                 </div><!-- /.box-header -->
                 <div class="box-body table-responsive no-padding">
-                    <table class="table table-hover">
+                    <table id="produitAction" class="table table-hover">
                         <tr>
                             <th>ID</th>
                             <th>Titre</th>
@@ -35,7 +35,7 @@
                                     <div class="btn-group">
                                         <a href="{{ path('wa_back_produit_show', {id: prod.id}) }}" class="btn btn-primary">Voir</a>
                                         <a href="{{ path('wa_back_produit_update', {id: prod.id}) }}" class="btn btn-warning">Editer</a>
-                                        <a href="{{ path('wa_back_produit_delete', {id:prod.id}) }}" class="btn btn-danger">Supprimer</a>
+                                        <a href="{{ path('wa_back_produit_delete', {id:prod.id}) }}" class="btn btn-danger delete">Supprimer</a>
                                     </div>
                                 </td>
                             </tr>
@@ -45,4 +45,9 @@
             </div><!-- /.box -->
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset("js/produit.js") }}"></script>
 {% endblock %}

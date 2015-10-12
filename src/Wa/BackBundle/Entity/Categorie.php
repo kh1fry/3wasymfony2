@@ -3,7 +3,8 @@
 namespace Wa\BackBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 /**
  * Categorie
  *
@@ -154,6 +155,41 @@ class Categorie
     public function getActive()
     {
         return $this->active;
+    }
+
+    /**
+     * @Assert\Callback
+     */
+    public function titleMajValidate(ExecutionContextInterface $context)
+    {
+        if( ucfirst($this->title) != $this->title) {
+            $context->buildViolation('Le titre doit avoir la 1ère lettre en majuscule')
+                ->atPath('title')
+                ->addViolation();
+        }
+
+    }
+
+    /*TEST DE LA POSITION*/
+    /* Contrainte pour toute l'entité et donc visible pour TOUT le formulaire (aucun champ ciblé en particulier) */
+        /**
+     * @Assert\True(message="Si la position est 1 alors il faut que le title soit Accueil")
+     */
+    public function isCategorieValide()
+    {
+        if (($this->position == 1)&&($this->position != "Accueil")){
+            return false;
+        }
+    }
+
+    /**
+     * @Assert\True(message="le title ne doit pas être reprit dans la description")
+     */
+    public function isInterdit()
+    {
+        if (preg_match("/\b(".$this->title.")\b/i",$this->description)){
+            return false;
+        }else{ return true;}
     }
 }
 

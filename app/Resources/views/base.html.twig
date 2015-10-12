@@ -19,6 +19,10 @@
             <!-- AdminLTE Skins. Choose a skin from the css/skins
                  folder instead of downloading all of them to reduce the load. -->
             <link rel="stylesheet" href="{{ asset('css/skins/_all-skins.min.css') }}">
+
+            <link rel="stylesheet" href="{{ asset('datepicker/jquery-ui.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('datepicker/jquery-ui.structure.min.css') }}">
+            <link rel="stylesheet" href="{{ asset('datepicker/jquery-ui.theme.min.css') }}">
             <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
             <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
             <!--[if lt IE 9]>
@@ -44,8 +48,11 @@
             <script src="{{ asset('plugins/slimScroll/jquery.slimscroll.min.js') }}"></script>
             <!-- ChartJS 1.0.1 -->
             <script src="{{ asset('plugins/chartjs/Chart.min.js') }}"></script>
-            <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-            <script src="{{ asset('js/pages/dashboard2.js') }}"></script>
+
+            <script src="{{ asset('datepicker/jquery-ui.min.js') }}"></script>
+            <!-- On appelle le calendrier qui revoie une date de format...-->
+            <script> $(".datepicker").datepicker({dateFormat:"dd/mm/yy"})</script>
+
             <!-- AdminLTE for demo purposes -->
             <script src="{{ asset('js/demo.js') }}"></script>
         {% endblock %}

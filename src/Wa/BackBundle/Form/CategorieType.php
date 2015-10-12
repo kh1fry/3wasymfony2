@@ -4,9 +4,9 @@ namespace Wa\BackBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ProduitType extends AbstractType
+class CategorieType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -17,23 +17,18 @@ class ProduitType extends AbstractType
         $builder
             ->add('title')
             ->add('description')
-            ->add('price')
-            //création d'un date picker
-            ->add('dateCreated', "date",[
-                "widget"=>"single_text",
-                "format"=>"dd/MM/yyyy"
-                ])
-            ->add('quantity')
+            ->add('position')
+            ->add('active')
         ;
     }
     
     /**
-     * @param OptionsResolver $resolver
+     * @param OptionsResolverInterface $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Wa\BackBundle\Entity\Produit'
+            'data_class' => 'Wa\BackBundle\Entity\Categorie'
         ));
     }
 
@@ -42,6 +37,6 @@ class ProduitType extends AbstractType
      */
     public function getName()
     {
-        return 'wa_backbundle_produit';
+        return 'wa_backbundle_categorie';
     }
 }

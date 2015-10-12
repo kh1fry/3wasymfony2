@@ -1,0 +1,9 @@
+{% extends 'WaBackBundle::layout.html.twig' %}
+{% block content %}
+    {{ parent() }}
+    <h1>Créer un catégorie</h1>
+    {{ form_start(formulaireCategorie, {attr : {novalidate:"novalidate"}} ) }}
+    {{ form_errors(formulaireCategorie) }}
+    {{ form_end(formulaireCategorie) }}
+    <a href="{{ path('wa_back_categorie') }}" class="btn btn-block btn-default">Retourner à la liste des catégories</a>
+{% endblock %}

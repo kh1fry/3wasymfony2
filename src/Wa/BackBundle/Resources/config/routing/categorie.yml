@@ -5,12 +5,12 @@ wa_back_categorie_show:
         id: \d+
 
 wa_back_categorie_creation:
-    path: /produit/create
-    defaults: { _controller: WaBackBundle:Produit:create}
+    path: /categorie/create
+    defaults: { _controller: WaBackBundle:Categorie:create}
 
 wa_back_categorie:
-    path: /
-    defaults: { _controller: WaBackBundle:Produit:index}
+    path: /categorie
+    defaults: { _controller: WaBackBundle:Categorie:index}
 
 wa_back_categorie_update:
     path: /produit/update/{id}
