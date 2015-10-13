@@ -24,6 +24,7 @@
                             <th>ID</th>
                             <th>Titre</th>
                             <th>Prix</th>
+                            <th>Catégorie</th>
                             <th>Actions</th>
                         </tr>
                         {% for prod in produits %}
@@ -31,6 +32,11 @@
                                 <td>{{ prod.id }}</td>
                                 <td>{{ prod.title }}</td>
                                 <td>{{ prod.price }}</td>
+                                <td>
+                                    {% if prod.categorie %}
+                                        {{prod.categorie.title}}
+                                    {% endif %}
+                                </td>
                                 <td>
                                     <div class="btn-group">
                                         <a href="{{ path('wa_back_produit_show', {id: prod.id}) }}" class="btn btn-primary">Voir</a>

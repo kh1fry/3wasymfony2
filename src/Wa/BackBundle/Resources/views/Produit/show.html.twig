@@ -23,6 +23,8 @@
     </div>
     <div class="btn-group">
         <a href="" class="btn btn-warning">Editer</a>
+        {{ dump(produit) }}
+        <p>{{(produit.categorie.title)}}</p>
         <a href="{{ path('wa_back_produit_delete', {id:produit.id}) }}" class="btn btn-danger">Supprimer</a>
     </div>
 

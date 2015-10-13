@@ -13,10 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Produit
 {
-    public function __construct(){
-        $this->dateCreated= new \Datetime("now");
-    }
-    /**
+     /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
@@ -38,7 +35,7 @@ class Produit
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
 
@@ -59,9 +56,22 @@ class Produit
     /**
      * @var \Integer
      *
-     * @ORM\Column(name="quantity", type="integer")
+     * @ORM\Column(name="quantity", type="integer", options={"default"=1})
      */
     private $quantity;
+
+    /**
+     * @var \Integer
+     *
+     * @ORM\ManyToOne(targetEntity="Categorie")
+     */
+    private $categorie;
+
+
+    public function __construct(){
+        $this->dateCreated= new \Datetime("now");
+        $this->quantity= 1;
+    }
 
     /**
      * Get id
@@ -168,5 +178,54 @@ class Produit
     {
         return $this->dateCreated;
     }
-}
 
+    /**
+     * Set quantity
+     *
+     * @param integer $quantity
+     *
+     * @return Produit
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    /**
+     * Get quantity
+     *
+     * @return integer
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
+    }
+
+
+
+    /**
+     * Set categorie
+     *
+     * @param \Wa\BackBundle\Entity\Categorie $categorie
+     *
+     * @return Produit
+     */
+    public function setCategorie(\Wa\BackBundle\Entity\Categorie $categorie = null)
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * Get categorie
+     *
+     * @return \Wa\BackBundle\Entity\Categorie
+     */
+    public function getCategorie()
+    {
+        return $this->categorie;
+    }
+}

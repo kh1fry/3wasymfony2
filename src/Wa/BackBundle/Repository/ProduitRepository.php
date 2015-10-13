@@ -1,6 +1,6 @@
 <?php
 
-namespace Wa\BackBundle\Entity;
+namespace Wa\BackBundle\Repository;
 
 /**
  * ProduitRepository
@@ -20,7 +20,6 @@ class ProduitRepository extends \Doctrine\ORM\EntityRepository
                 FROM WaBackBundle:Produit prod
         ");
         */
-
         $query= $this->createQueryBuilder("prod")
                     ->getQuery();
 
@@ -62,4 +61,31 @@ class ProduitRepository extends \Doctrine\ORM\EntityRepository
 
         return $query->getSingleResult();
     }
+
+    //AFFICHER PRODUIT AVEC QTE INFERIEUR A PARAMETRE
+    public function listeProduitQte($quantite){
+        $query= $this->createQueryBuilder("prod")
+                    ->where('prod.quantite < qteProd')
+                    ->setParameter("qteProd",$quantite)
+                    ->getQuery();
+        die(dump($query->getResult()));
+
+        return $query->getResult();
+    }
+
+    //AFFICHER LE PRIX MAX ET MIN
+    public function prixMaxMin(){
+    }
+
+    public function findProduitByCategorie(){
+        $query= $this->getEntityManager()
+                    ->createQuery("
+                        SELECT prod, cat
+                        FROM WaBackBundle:Produit prod
+                        LEFT JOIN prod.categorie cat
+                    ");
+
+        return $query->getResult();
+    }
 }
+

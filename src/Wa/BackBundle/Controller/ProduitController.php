@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Wa\BackBundle\Entity\Categorie;
+use Wa\BackBundle\Repository\CategorieRepository;
 use Wa\BackBundle\Entity\Produit;
 use Wa\BackBundle\Form\ProduitType;
 
@@ -14,7 +16,8 @@ use Wa\BackBundle\Form\ProduitType;
 class ProduitController extends Controller
 {
 
-    public function showAction($id){
+    // Produit $product : equivalent à $em->getRepository("WaBackBundle:Produit")->find($id)
+    public function showAction(Produit $produit){
         // CODE POUR APPRENDRE
         /*
         $products = [
@@ -54,11 +57,16 @@ class ProduitController extends Controller
             throw $this->createNotFoundException('Le produit n\'existe pas');
         endif;
         FIN CODE PR APPRENDRE*/
-        //Repository endroit ou il va chercher les requêtes personnalisées
+
+        //Utilisation du paramConverter au niveau de la méthode
+        /*
         $em= $this->getDoctrine()->getManager();
         //Va regarder dans l'entité produit
         $produit= $em->getRepository("WaBackBundle:Produit")
                     ->find($id);
+        */
+
+
         return $this->render('WaBackBundle:Produit:show.html.twig', array('produit' => $produit));
     }
 
@@ -68,7 +76,8 @@ class ProduitController extends Controller
         $em= $this->getDoctrine()->getManager();
         //Va regarder dans l'entité produit
         $produits= $em->getRepository("WaBackBundle:Produit")
-                        -> findAll();//finby+champsEntité (méthode symfony)
+                        //-> findAll();//finby+champsEntité
+                        ->findProduitByCategorie();
         //die(dump($produits));
         return $this->render('WaBackBundle:Produit:index.html.twig',["produits"=>$produits]);
     }
@@ -114,6 +123,20 @@ class ProduitController extends Controller
             ->add("description","textarea")
             ->add("price")
             ->add("quantity")
+            ->add('categorie','entity',[
+                "class"=>"WaBackBundle:Categorie",
+                "choice_label"=>"title",
+                /*
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('cat')
+                        ->orderBy('cat.position', 'ASC');
+                }
+                */
+                "query_builder"=> function(CategorieRepository $er){
+                    return $er->buildCategorieOrderPosition();
+
+                }
+            ])
             ->add("Modifier","submit")
             ->getForm();
 
