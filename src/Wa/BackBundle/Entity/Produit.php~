@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Produit
  *
  * @ORM\Table(name="produit")
- * @ORM\Entity(repositoryClass="Wa\BackBundle\Entity\ProduitRepository")
+ * @ORM\Entity(repositoryClass="Wa\BackBundle\Repository\ProduitRepository")
  */
 class Produit
 {
@@ -26,8 +26,6 @@ class Produit
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=100)
-     */
-    /**
      * @Assert\NotBlank(message="Remplir champs titre")
      */
     private $title;
@@ -67,6 +65,13 @@ class Produit
      */
     private $categorie;
 
+    /**
+     * @var \Integer
+     *
+     * @ORM\ManyToOne(targetEntity="Marque")
+     * @ORM\JoinColumn(name="marque_id", referencedColumnName="id", nullable=false)
+     */
+    private $marque;
 
     public function __construct(){
         $this->dateCreated= new \Datetime("now");
@@ -228,4 +233,5 @@ class Produit
     {
         return $this->categorie;
     }
+
 }

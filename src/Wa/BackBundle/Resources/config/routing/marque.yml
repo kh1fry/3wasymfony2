@@ -1,0 +1,30 @@
+marque:
+    path:     /
+    defaults: { _controller: "WaBackBundle:Marque:index" }
+
+marque_show:
+    path:     /{id}/show
+    defaults: { _controller: "WaBackBundle:Marque:show" }
+
+marque_new:
+    path:     /new
+    defaults: { _controller: "WaBackBundle:Marque:new" }
+
+marque_create:
+    path:     /create
+    defaults: { _controller: "WaBackBundle:Marque:create" }
+    methods:  POST
+
+marque_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "WaBackBundle:Marque:edit" }
+
+marque_update:
+    path:     /{id}/update
+    defaults: { _controller: "WaBackBundle:Marque:update" }
+    methods:  [POST, PUT]
+
+marque_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "WaBackBundle:Marque:delete" }
+    methods:  [POST, DELETE]

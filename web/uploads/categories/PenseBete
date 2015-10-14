@@ -1,0 +1,126 @@
+Installer git
+Ouvrir le terminal
+cmd
+git -v /si pas reconnu rallumer l'ordi
+/sii marche toujours pas
+/*cocher endroit ou ya prompt paht
+
+Github gist
+Aller sur github
+Aller sur son profile
+sur la droite et copier l'url
+se déplace dans son dossier www (wamp)
+git clone + url ds wamp dossier www
+faire php composer .phar (à mettre dans le dossier synfony creer pour accueillir le projet)
+
+Routing
+wa_back_test:
+    path:     /toto
+    defaults: { _controller: WaBackBundle:Default:test }
+                          application:controller:methode du controller
+
+Controller
+
+return $this->render('WaBackBundle:Test:index.html.twig');
+             application:dossier dans views:fichier dans le dossier
+
+Vue
+
+//Pour cloner un projet vers github
+se déplacer ds notre repository :cd sites
+git clone + url github projet
+se déplacer dans le projet récup : cd new projet
+Copier coller un fichier composer.phar ds le new projet
+
+
+
+update composer : php composer.phar update
+
+
+ls : liste toutes les fichiers et dossiers
+cd : pour se déplacer
+
+git remote -v //Visualiser les remotes
+cd .. //Remonter
+git clone//récup le projet de github vers dossier local
+php composer.phar update
+git add -- all
+git commit -m "commentaire"
+git push origine master
+git pull origin master//récup le dossier
+
+/*Customiser le layout du form */
+git
+TODO : sidebar
+Dashboard
+Produits
+Categories
+Contact
+Feedback
+Autre
+Pr
+Trouver le fichier form_div_layout.html.twig
+Ds vendor>synfony>synfony>src>bridge>twig>ressource>trouvé
+php app/console router:debug //permet d'avoir les path du projet
+*********CREER BDD****
+php app/console //Voir ligne de commande utile
+dans le projet >app>config>parameters.yml
+modifier: 
+-database user & password doit ê == à mysql
+faire:
+php app/console doctrine:generate:entity
+configuration.... [annontation]: taper enter (valeur par défaut)
+Terminer la classe: (entrer == return)
+generer repository :yes //contient toutes les rqtes
+Dans la classe modifier la ligne 10 = mettre name =nom table en minuscule
+Modifier le chemin du fichier Entity et EntityRepository
+Ne pas oublier le use si on ajoute un assert not blank
+Ajouter un champs: le faire dans la classe entity PUIS
+terminal: php app/console doctrine:schema:update --force pour créer le champs
+php app/console doctrine:generate:entities nombundle:classe//Créer les getter et setter
+php app/console doctrine:schema:update --force //MAJ BDD
+php app/console doctrine:generate:crud
+annotation: yml
+
+*********** 
+Exo avec git
+git init //initialise git 
+git status  //Donne le status du dépôt (permet de voir le suivi de dossier et fichiers)
+git commit -m "1er commit" // check point (je fais & commit + msg)
+git log //historique des commits
+git log -n 1//Donne le dernier commit
+git --oneline //Permet d'avoir le nom du commit
+git log -p nomfichier//Voir les différences de commit sur 1 fichier
+git commit --amend //faire un petit commit sur le dernier fichier (pr ptie modif)
+Creer la table: php app/console doctrine:schema:update --force
+Pour voir le sql d'une requte : idem --dump -sql
+
+git checkout+n° doss //revenir ds le passé
+git checkout master //revenir au présent
+git revert + num de fichier // permet de supprimer un fichier commit
+
+*****GENERATION FORM A PARTIR D'ENTITE *****
+php app/console doctrine:generate:form WaBackBundle:Produit
+****** RACCOURCIS ****
+ctrl+N ou ctrl+shift+N == Rechercher un fichier dans PHP storm
+
+***** LIENS ****
+Class entity repository == http://www.doctrine-project.org/api/orm/2.2/class-Doctrine.ORM.EntityRepository.html
+
+**** CHOIX DE DEV ****
+SILEX => petit projet
+LARAVEL => Moyen
+SYMFONY => Gros
+
+***OBJET PROXY ****
+Traverse les objets
+{{produit.categorie.title}}
+Problème => Fait des rqtes supplémentaires
+
+*** GENERER UN JEU DE CARACTERE ***
+php app/console doctrine:fixture:load --append
+
+**** DEFINIR DES LIGNES DE COMMANDES ****
+Faire comme dans le dossier Command
+php app/console //Voir la commande créer 
+

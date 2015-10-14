@@ -87,5 +87,14 @@ class ProduitRepository extends \Doctrine\ORM\EntityRepository
 
         return $query->getResult();
     }
+
+    public function findProduitByQuantite($qte){
+        $query= $this->createQueryBuilder("prod")
+            ->where('prod.quantite < $qte')
+            ->setParameter("qteProd",$qte)
+            ->getQuery();
+
+        return $query->getResult();
+    }
 }
 

@@ -1,6 +1,7 @@
-wa_back_categorie:
-    resource: "@WaBackBundle/Resources/config/routing/categorie.yml"
-    prefix:   /
+wa_back_marque:
+    resource: "@WaBackBundle/Resources/config/routing/marque.yml"
+    prefix:   /marque
+
 # ENTRAINEMENT
 wa_back_about:
     path: /about
@@ -11,7 +12,9 @@ wa_back_etudiant:
     defaults: { _controller: WaBackBundle:Etudiant:index }
 # FIN ENTRAINEMENT
 
-
+wa_back_categorie:
+    resource: "@WaBackBundle/Resources/config/routing/categorie.yml"
+    prefix:   /
 
 wa_back_homepage:
     path:     /

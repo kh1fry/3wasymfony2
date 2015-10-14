@@ -100,16 +100,37 @@ class CategorieController extends Controller
         $formCategorie->handleRequest($request);
 
         if($formCategorie->isValid()){
-            //die(dump($produit));
+            //die(dump($categories));
+            $image= $categories->getImage();
+            //Appel de la fonction de l'objet image
+            $image->upload();
+
             //On récupère la cnx° (Doctrine)
             $em= $this->getDoctrine()->getManager();
             //Surveille l'objet et ses modifications
+            //Je delete les 2 lignes en dessous car cascade persist dans l'entité categorie
+            //$em->persist($image);
+            //$em->flush();
             $em->persist($categories);
             $em->flush();
             //Msg flash
             $this->get("session")->getFlashBag()
                 ->add("success","1 catégorie a été créé");
+
         }
         return $this->render('WaBackBundle:Categorie:formCategorie.html.twig', ["formulaireCategorie"=>$formCategorie->createView()]);
+    }
+
+    public function renderAllCategorieAction(){
+        //Repository endroit ou il va chercher les requêtes personnalisées
+        $em= $this->getDoctrine()->getManager();
+        //Va regarder dans l'entité catégorie
+        $categories= $em->getRepository("WaBackBundle:Categorie")
+            ->findAll();
+        return $this->render("WaBackBundle:Categorie:renderCategorie.html.twig",["categories"=>$categories]);
+    }
+
+    public function showAction(Categorie $categorie){
+        return $this->render('WaBackBundle:Categorie:show.html.twig', array('categorie' => $categorie));
     }
 }

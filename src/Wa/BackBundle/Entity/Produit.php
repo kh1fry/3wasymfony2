@@ -65,6 +65,13 @@ class Produit
      */
     private $categorie;
 
+    /**
+     * @var \Integer
+     * @Assert\NotBlank(message="Choisir une marque")
+     * @ORM\ManyToOne(targetEntity="Marque")
+     * @ORM\JoinColumn(name="marque_id", referencedColumnName="id", nullable=false)
+     */
+    private $marque;
 
     public function __construct(){
         $this->dateCreated= new \Datetime("now");
@@ -225,5 +232,30 @@ class Produit
     public function getCategorie()
     {
         return $this->categorie;
+    }
+
+
+    /**
+     * Set marque
+     *
+     * @param \Wa\BackBundle\Entity\Marque $marque
+     *
+     * @return Produit
+     */
+    public function setMarque(\Wa\BackBundle\Entity\Marque $marque)
+    {
+        $this->marque = $marque;
+
+        return $this;
+    }
+
+    /**
+     * Get marque
+     *
+     * @return \Wa\BackBundle\Entity\Marque
+     */
+    public function getMarque()
+    {
+        return $this->marque;
     }
 }

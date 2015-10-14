@@ -1,5 +1,5 @@
 wa_back_categorie_show:
-    path: /show/{id}
+    path: /categorie/show/{id}
     defaults: { _controller: WaBackBundle:Categorie:show }
     requirements:
         id: \d+

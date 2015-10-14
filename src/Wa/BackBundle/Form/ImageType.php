@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class CategorieType extends AbstractType
+class ImageType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,12 +15,10 @@ class CategorieType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title')
-            ->add('description')
-            ->add('position')
-            ->add('active')
-            //Création du form Image à l'intérieur du form Cat
-            ->add('image',new ImageType())
+            /*->add('name')
+            ->add('caption')*/
+            //Add un "input" de type "file" (le browse)
+            ->add("file","file")
         ;
     }
     
@@ -30,7 +28,7 @@ class CategorieType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Wa\BackBundle\Entity\Categorie'
+            'data_class' => 'Wa\BackBundle\Entity\Image'
         ));
     }
 
@@ -39,6 +37,6 @@ class CategorieType extends AbstractType
      */
     public function getName()
     {
-        return 'wa_backbundle_categorie';
+        return 'wa_backbundle_image';
     }
 }

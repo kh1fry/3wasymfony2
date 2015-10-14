@@ -1,0 +1,5 @@
+{% for cat in categories %}
+<li>
+    <a href="{{ path('wa_back_categorie', {id :cat.id }) }}">{{ cat.title }}</a>
+</li>
+{% endfor %}
