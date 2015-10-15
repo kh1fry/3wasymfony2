@@ -21,6 +21,7 @@ class CategorieType extends AbstractType
             ->add('active')
             //Création du form Image à l'intérieur du form Cat
             ->add('image',new ImageType())
+            
         ;
     }
     

@@ -53,8 +53,8 @@ class Categorie
     /**
      * @var \Integer
      *
-     * @ORM\OneToOne(targetEntity="Image", cascade={"persist"})
-     *
+     * @ORM\OneToOne(targetEntity="Image", cascade={"persist", "remove"})
+     * @Assert\Valid
      */
     private $image;
 
@@ -214,6 +214,11 @@ class Categorie
      */
     public function setImage(\Wa\BackBundle\Entity\Image $image = null)
     {
+        //Permettre d'avoir une catégorie sans img
+        if($image == null|| !$image->getFile()){
+            $image= null;
+        }
+        //die(dump($image));
         $this->image = $image;
 
         return $this;

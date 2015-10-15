@@ -25,6 +25,8 @@
                             <th>Description</th>
                             <th>Position</th>
                             <th>Active</th>
+                            <th>Légende</th>
+                            <th>Images</th>
 
                         </tr>
                         {% for categorie in categories %}
@@ -34,7 +36,23 @@
                                 <td>{{ categorie.description }}</td>
                                 <td>{{ categorie.position }}</td>
                                 <td>{{ categorie.active }}</td>
-
+                                {% if categorie.image %}
+                                    <td>{{ categorie.image.caption }}</td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+                                <td>
+                                {% if categorie.image %}
+                                    <img src="{{ asset(categorie.image.getWebPath("thumb-small")) }}"/>
+                                {% endif %}
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a href="{{ path('wa_back_categorie_show', {id: categorie.id}) }}" class="btn btn-primary">Voir</a>
+                                        <a href="{{ path('wa_back_categorie_update', {id: categorie.id}) }}" class="btn btn-warning">Editer</a>
+                                        <a href="{{ path('wa_back_categorie_delete', {id:categorie.id}) }}" class="btn btn-danger delete">Supprimer</a>
+                                    </div>
+                                </td>
                             </tr>
                         {% endfor %}
 

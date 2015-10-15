@@ -13,9 +13,9 @@ wa_back_categorie:
     defaults: { _controller: WaBackBundle:Categorie:index}
 
 wa_back_categorie_update:
-    path: /produit/update/{id}
-    defaults: { _controller: WaBackBundle:Produit:update }
+    path: /categorie/update/{id}
+    defaults: { _controller: WaBackBundle:Categorie:update }
 
-categorie_delete:
-    path: /produit/delete/{id}
-    defaults: { _controller: WaBackBundle:Produit:delete }
+wa_back_categorie_delete:
+    path: /categorie/delete/{id}
+    defaults: { _controller: WaBackBundle:Categorie:delete }

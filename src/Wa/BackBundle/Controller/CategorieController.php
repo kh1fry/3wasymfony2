@@ -100,10 +100,10 @@ class CategorieController extends Controller
         $formCategorie->handleRequest($request);
 
         if($formCategorie->isValid()){
-            //die(dump($categories));
+            /*//die(dump($categories));
             $image= $categories->getImage();
             //Appel de la fonction de l'objet image
-            $image->upload();
+            $image->upload();*/
 
             //On récupère la cnx° (Doctrine)
             $em= $this->getDoctrine()->getManager();
@@ -132,5 +132,48 @@ class CategorieController extends Controller
 
     public function showAction(Categorie $categorie){
         return $this->render('WaBackBundle:Categorie:show.html.twig', array('categorie' => $categorie));
+    }
+
+    /***EDITER CATEGORIE***/
+    public function updateAction(Request $request, $id){
+        //Repository endroit ou il va chercher les requêtes personnalisées
+        $em= $this->getDoctrine()->getManager();
+        //Va regarder dans l'entité produit
+        $categorie= $em->getRepository("WaBackBundle:Categorie")
+            ->find($id);
+
+        //Creation formulaire
+        $formCategorie = $this->createForm(new CategorieType(), $categorie)
+        ->add("Modifier","submit");
+
+        //dump($produit);
+        //Recupère tt ce que le user tape dans le form
+        $formCategorie->handleRequest($request);
+        if($formCategorie->isValid()){
+            //On récupère la cnx° (Doctrine)
+            $em= $this->getDoctrine()->getManager();
+            //Surveille l'objet et ses modifications
+            $em->persist($categorie);
+            $em->flush();
+        }
+        return $this->render('WaBackBundle:Categorie:formUpdateCategorie.html.twig', ["formulaireCategorie"=>$formCategorie->createView()]);
+    }
+
+    /***SUPPRIMER CATEGORIE ***/
+    public function deleteAction($id, Request $request){
+
+        //Repository endroit ou il va chercher les requêtes personnalisées
+        $em= $this->getDoctrine()->getManager();
+        //Va regarder dans l'entité catégorie
+        $categorie= $em->getRepository("WaBackBundle:Categorie")
+            ->find($id);
+        if(!$categorie){throw $this->createNotFoundException("Catégorie inexistant !");}
+
+        $em->remove($categorie);
+        $em->flush();
+        //Si la requete et en ajax renvoyer quelque chose (booléan au autre pour confirmer que ça s'est bien passé)
+        if($request->isXmlHttpRequest()){return new JsonResponse();}
+
+        return $this->redirectToRoute("wa_back_categorie");
     }
 }

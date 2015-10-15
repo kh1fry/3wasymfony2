@@ -1,0 +1,10 @@
+{% extends 'WaBackBundle::layout.html.twig' %}
+{% block content %}
+    <a href="{{ path('wa_back_categorie') }}">Retourner à la liste des produits</a>
+    <h3>Modifier catégorie</h3>
+    {{ form_start(formulaireCategorie, {attr : {novalidate:"novalidate"}} ) }}
+    {#Afficher les erreurs du formulaire#}
+    {{ form_errors(formulaireCategorie) }}
+    {{ form_end(formulaireCategorie) }}
+    <a href="{{ path('wa_back_categorie') }}" class="btn btn-block btn-default">Retourner à la liste des catégories</a>
+{% endblock %}
