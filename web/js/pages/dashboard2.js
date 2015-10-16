@@ -94,44 +94,7 @@ $(function () {
   // Get context with jQuery - using jQuery's .get() method.
   var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
   var pieChart = new Chart(pieChartCanvas);
-  var PieData = [
-    {
-      value: 700,
-      color: "#f56954",
-      highlight: "#f56954",
-      label: "Chrome"
-    },
-    {
-      value: 500,
-      color: "#00a65a",
-      highlight: "#00a65a",
-      label: "IE"
-    },
-    {
-      value: 400,
-      color: "#f39c12",
-      highlight: "#f39c12",
-      label: "FireFox"
-    },
-    {
-      value: 600,
-      color: "#00c0ef",
-      highlight: "#00c0ef",
-      label: "Safari"
-    },
-    {
-      value: 300,
-      color: "#3c8dbc",
-      highlight: "#3c8dbc",
-      label: "Opera"
-    },
-    {
-      value: 100,
-      color: "#d2d6de",
-      highlight: "#d2d6de",
-      label: "Navigator"
-    }
-  ];
+
   var pieOptions = {
     //Boolean - Whether we should show a stroke on each segment
     segmentShowStroke: true,
@@ -156,7 +119,7 @@ $(function () {
     //String - A legend template
     legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>",
     //String - A tooltip template
-    tooltipTemplate: "<%=value %> <%=label%> users"
+    tooltipTemplate: "<%=value %> <%=label%>"
   };
   //Create pie or douhnut chart
   // You can switch between pie and douhnut using the method below.

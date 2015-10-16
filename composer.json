@@ -19,7 +19,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "symfony/debug": "^2.7",
         "doctrine/doctrine-fixtures-bundle": "^2.2",
-        "imagine/imagine": "^0.6.3"
+        "imagine/imagine": "^0.6.3",
+        "fzaninotto/faker": "^1.5"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

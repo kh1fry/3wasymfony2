@@ -17,23 +17,49 @@ class MainController extends Controller
         $em= $this->getDoctrine()
                 ->getManager();
 
+        //AFFICHER TOUT LES PRODUITS
         $productAll= $em->getRepository("WaBackBundle:Produit")
                         // equivalent du ->findAll()
                         ->findAllPerso();
-        //dump($productAll);
-        //die();
 
+        //AFFICHER UN PRODUIT
         $product= $em->getRepository("WaBackBundle:Produit")
                     // equivalent de ->find(id)
                     ->findPerso(14);
+
+        //AFFICHER LES PRODUITS PAR CATEGORIE
+        $productCatHome=$em->getRepository("WaBackBundle:Produit")
+            ->pdtWithCatHome(1);
+
+        //AFFICHER LES
+        $pdtSansCat= $em->getRepository("WaBackBundle:Produit")
+            ->pdtSansCategorie();
+
+        //AFFICHER LE NBR DE PRODUITS PAR CATEGORIE
+        $nbrPdtByCat= $em->getRepository("WaBackBundle:Produit")
+            ->nbrPdtByCat();
+
+        //AFFICHER LE PRODUIT LE PLUS CHER
+        $pdtPrixMax= $em->getRepository("WaBackBundle:Produit")
+            ->pdtPrixMax();
+
+        //AFFICHER LES CATEGORIES SANS IMAGES
+        $catSansImg= $em->getRepository("WaBackBundle:Categorie")
+            ->catSansImg();
+
+
 
         return $this->render('WaBackBundle:Main:admin.html.twig',
             [
                 'productAll' => $productAll,
                 'productDetail' => $product,
+                'productAccueil'=> $productCatHome,
+                'productSansCat'=> $pdtSansCat,
+                'nbrPdtByCat'=>$nbrPdtByCat,
+                'pdtPrixMax'=>$pdtPrixMax,
+                'catSansimage'=>$catSansImg
             ]);
     }
-
 
     public function contactAction(Request $request)
     {

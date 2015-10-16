@@ -15,7 +15,7 @@ class CategorieRepository extends \Doctrine\ORM\EntityRepository
         $query= $this->createQueryBuilder("cat")
             ->addGroupBy('cat.active')
             ->getQuery();
-        die(dump($query->getResult()));
+        //die(dump($query->getResult()));
 
         return $query->getResult();
 
@@ -27,7 +27,7 @@ class CategorieRepository extends \Doctrine\ORM\EntityRepository
             ->andHaving('cat.active=1')
             ->orWhere('cat.active=0')
             ->getQuery();
-        die(dump($query->getResult()));
+        //die(dump($query->getResult()));
 
         return $query->getResult();
     }
@@ -37,15 +37,31 @@ class CategorieRepository extends \Doctrine\ORM\EntityRepository
             ->where('cat.position > positionCat')
             ->setParameter("positionCat",$position)
             ->getQuery();
-        die(dump($query->getResult()));
+        //die(dump($query->getResult()));
 
         return $query->getResult();
     }
-
+    //AFFICHER CATEGORIE ORBER BY POSITION
     public function buildCategorieOrderPosition(){
         $queryBuilder = $this->createQueryBuilder("cat")
                  ->orderBy("cat.position");
 
         return $queryBuilder;
     }
+    //AFFICHER LA CATEGORIE DU PRODUIT LE PLUS CHER ACTIVEE
+    public function catPdtPrxMax(){
+
+    }
+    //AFFICHER CATEGORIE SANS IMAGE
+    public function catSansImg(){
+        $query= $this->createQueryBuilder("cat")
+            ->where("cat.image IS NULL")
+            ->getQuery();
+
+       // die(dump($query->getResult()));
+        return $query;
+    }
+    //AFFICHER
+
+
 }

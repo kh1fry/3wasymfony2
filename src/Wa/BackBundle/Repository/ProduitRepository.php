@@ -35,7 +35,7 @@ class ProduitRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter("idProd", $id)
             ->getQuery();
 
-        die(dump($query->getSingleResult()));
+        //die(dump($query->getSingleResult()));
 
 
 
@@ -68,7 +68,7 @@ class ProduitRepository extends \Doctrine\ORM\EntityRepository
                     ->where('prod.quantite < qteProd')
                     ->setParameter("qteProd",$quantite)
                     ->getQuery();
-        die(dump($query->getResult()));
+        //die(dump($query->getResult()));
 
         return $query->getResult();
     }
@@ -90,11 +90,80 @@ class ProduitRepository extends \Doctrine\ORM\EntityRepository
 
     public function findProduitByQuantite($qte){
         $query= $this->createQueryBuilder("prod")
-            ->where('prod.quantite < $qte')
+            ->where('prod.quantite < :qteProd')
             ->setParameter("qteProd",$qte)
             ->getQuery();
 
         return $query->getResult();
     }
+
+
+    //AFFICHER PRODUITS AVEC CATEGORIE == ACCUEIL (NON Opimisées la jointure est en trop)
+    public function pdtWithCatHome($id){
+        /*
+         Cela créer le select et le from de l'entité du repository (ici product)
+         $this->createQueryBuilder("prod")
+
+        Cela créer un createQueryBuilder vide (if faut faire le select et le from)
+        $this->getEntityManager()->createQueryBuilder()->select()->from()
+         */
+        $query= $this->createQueryBuilder("prod")
+            ->join('prod.categorie', 'cat')
+            ->where('cat.id = :idValue')
+            //->setParameter('idValue', $id)
+            ->setParameters(
+                [
+                    'idValue' => $id
+                ]
+            )
+            ->getQuery();
+
+
+        //die(dump($query->getResult()));
+        return $query->getResult();
+    }
+
+    //AFFICHER PRODUIT PAR CATEGORIE
+    public function pdByCategorie($value){
+        $query= $this->createQueryBuilder("prod")
+                ->where('prod.categorie = :value')
+                ->setParameter('value', $value)
+                ->getQuery();
+
+        die(dump($query->getResult()));
+        return $query->getResult();
+    }
+
+    //AFFICHER PRODUIT SANS CATEGORIE
+    public function pdtSansCategorie(){
+        $query= $this->createQueryBuilder("prod")
+            ->where('prod.categorie IS NULL')
+            ->getQuery();
+
+        //die(dump($query->getResult()));
+        return $query->getResult();
+    }
+
+    //AFFICHCER NBR PDT PAR CATEGORIE
+    public function nbrPdtByCat(){
+        $query= $this->createQueryBuilder("prod")
+            ->select('COUNT(prod.id) as nb,cat.title')
+            ->join('prod.categorie', 'cat')
+            ->groupBy('prod.categorie')
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
+    //AFFICHER LE PRODUIT LE PLUS CHER
+    public function pdtPrixMax(){
+        $query= $this->createQueryBuilder("prod")
+            ->select('MAX(prod.price)')
+            ->getQuery();
+
+        //die(dump($query->getResult()));
+        return $query->getResult();
+    }
+
 }
 
