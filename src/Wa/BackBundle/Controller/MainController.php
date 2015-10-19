@@ -48,7 +48,6 @@ class MainController extends Controller
             ->catSansImg();
 
 
-
         return $this->render('WaBackBundle:Main:admin.html.twig',
             [
                 'productAll' => $productAll,

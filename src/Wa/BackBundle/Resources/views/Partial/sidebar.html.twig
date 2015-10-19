@@ -14,7 +14,7 @@
             <!-- search form -->
             <form action="#" method="get" class="sidebar-form">
                 <div class="input-group">
-                    <input type="text" name="q" class="form-control" placeholder="Search...">
+                    <input type="text" name="q" class="form-control" placeholder="Recherche...">
               <span class="input-group-btn">
                 <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
               </span>
@@ -23,27 +23,25 @@
             <!-- /.search form -->
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
-                <li class="header">MAIN NAVIGATION</li>
+                <li class="header">DASHBOARD</li>
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-dashboard"></i> <span>Dashboard</span> <i class="fa fa-angle-left pull-right"></i>
+                        <i class="fa fa-dashboard"></i> <span>Catégories</span> <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="../../index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
-                        <li><a href="../../index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
+                        <li><a href="{{ path('wa_back_categorie') }}"><i class="fa fa-circle-o"></i> Afficher</a></li>
+                        <li><a href=""><i class="fa fa-circle-o"></i> Créer</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-files-o"></i>
-                        <span>Layout Options</span>
+                        <span>Produits</span>
                         <span class="label label-primary pull-right">4</span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="../layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
-                        <li><a href="../layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
-                        <li><a href="../layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
-                        <li><a href="../layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
+                        <li><a href="{{ path('wa_back_produit') }}"><i class="fa fa-circle-o"></i> Afficher</a></li>
+                        <li><a href="{{ path('wa_back_produit_creation') }}"><i class="fa fa-circle-o"></i>Créer</a></li>
                     </ul>
                 </li>
                 <li>
@@ -81,13 +79,11 @@
                 </li>
                 <li class="treeview active">
                     <a href="#">
-                        <i class="fa fa-edit"></i> <span>Forms</span>
+                        <i class="fa fa-edit"></i> <span>Commentaires</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
-                        <li class="active"><a href="general.html"><i class="fa fa-circle-o"></i> General Elements</a></li>
-                        <li><a href="advanced.html"><i class="fa fa-circle-o"></i> Advanced Elements</a></li>
-                        <li><a href="editors.html"><i class="fa fa-circle-o"></i> Editors</a></li>
+                        <li class="active"><a href="{{ path('commentaires') }}"><i class="fa fa-circle-o"></i> Afficher</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
@@ -156,8 +152,8 @@
                 <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
                 <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
                 <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
-
-                {{ render(controller("WaBackBundle:Categorie:renderAllCategorie")) }}
+                {#AFFICHER TOUTES LES CATEGORIES
+                {{ render(controller("WaBackBundle:Categorie:renderAllCategorie")) }} #}
             </ul>
         </section>
         <!-- /.sidebar -->

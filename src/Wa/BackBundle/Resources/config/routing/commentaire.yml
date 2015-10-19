@@ -1,0 +1,7 @@
+commentaires:
+    path:     /
+    defaults: { _controller: "WaBackBundle:Commentaire:index" }
+
+commentaire_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "WaBackBundle:Commentaire:edit" }

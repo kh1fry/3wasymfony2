@@ -27,13 +27,9 @@ class LoadCategorieData extends AbstractFixture implements OrderedFixtureInterfa
     }*/
     public function load(ObjectManager $manager)
     {
-        // Création du tableau permettant de stocker toutes les catégories
-        //$allCategories = [];
+
         $faker = \Faker\Factory::create('fr_FR');
 
-        // generate data by accessing properties
-        /*echo $faker->name;
-        die;*/
 
         for ($i=0; $i <10; $i++ ){
             $categorie = new Categorie();
@@ -42,13 +38,14 @@ class LoadCategorieData extends AbstractFixture implements OrderedFixtureInterfa
             $categorie->setDescription($faker->text);
             $categorie->setPosition($faker->randomDigitNotNull);
             $categorie->setActive($faker->numberBetween(0,1));
+            $categorie->setImage(null);
 
             $manager->persist($categorie);
             $manager->flush();
-            //array_push($allCategories, $categorie);
+
+            $this->addReference('categ_'.$i, $categorie);
         }
-        // J'envoie toutes les catégories afin de les récupérer dans les fixtures des produits
-        $this->addReference('categ', $categorie);
+
     }
 
     public function getOrder(){

@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Wa\BackBundle\Entity\Categorie;
+use Wa\BackBundle\Entity\Commentaire;
+use Wa\BackBundle\Form\CommentaireType;
 use Wa\BackBundle\Repository\CategorieRepository;
 use Wa\BackBundle\Entity\Produit;
 use Wa\BackBundle\Form\ProduitType;
@@ -17,57 +19,44 @@ class ProduitController extends Controller
 {
 
     // Produit $product : equivalent à $em->getRepository("WaBackBundle:Produit")->find($id)
-    public function showAction(Produit $produit){
-        // CODE POUR APPRENDRE
-        /*
-        $products = [
-            [
-                "id" => 1,
-                "title" => "Mon premier produit",
-                "description" => "lorem ipsum",
-                "date_created" => new \DateTime('now'),
-                "prix" => 10
-            ],
-            [
-                "id" => 2,
-                "title" => "Mon deuxième produit",
-                "description" => "lorem ipsum",
-                "date_created" => new \DateTime('now'),
-                "prix" => 20
-            ],
-            [
-                "id" => 3,
-                "title" => "Mon troisième produit",
-                "description" => "lorem ipsum",
-                "date_created" => new \DateTime('now'),
-                "prix" => 30
-            ],
-            [
-                "id" => 4,
-                "title" => "",
-                "description" => "lorem ipsum",
-                "date_created" => new \DateTime('now'),
-                "prix" => 410
-            ],
-        ];
+    public function showAction(Produit $produit, Request $request){
+        //Creation formulaire
+        $commentaires = new Commentaire();
 
-        if (array_key_exists($id, $products)):
-                $produit = $products[$id];
-        else:
-            throw $this->createNotFoundException('Le produit n\'existe pas');
-        endif;
-        FIN CODE PR APPRENDRE*/
+        $formCommentaire= $this->createForm(new CommentaireType(),$commentaires)
+            ->add("Ajouter","submit");
 
-        //Utilisation du paramConverter au niveau de la méthode
-        /*
-        $em= $this->getDoctrine()->getManager();
-        //Va regarder dans l'entité produit
-        $produit= $em->getRepository("WaBackBundle:Produit")
-                    ->find($id);
-        */
+        //Recupère tt ce que le user tape dans le form
+        $formCommentaire->handleRequest($request);
+        //On récupère la cnx° (Doctrine)
+        $em = $this->getDoctrine()->getManager();
+        if($formCommentaire->isValid()) {
 
+            // Lier le commentaire au produit
+            $commentaires->setProduit($produit);
 
-        return $this->render('WaBackBundle:Produit:show.html.twig', array('produit' => $produit));
+            //Surveille l'objet et ses modifications
+            //Je delete les 2 lignes en dessous car cascade persist dans l'entité categorie
+            //$em->persist($image);
+            //$em->flush();
+            $em->persist($commentaires);
+            $em->flush();
+            //Msg flash
+            $this->get("session")->getFlashBag()
+                ->add("success", "1 commentaire a été ajouté");
+        }
+
+        //AFFICHER LES COMMENTAIRES PAR PRODUIT
+        $comByPdt= $em->getRepository("WaBackBundle:Commentaire")
+            ->commentByPdt(18);
+
+        return $this->render('WaBackBundle:Produit:show.html.twig',
+            [
+                'produit' => $produit,
+                'formulaireCommentaire'=>$formCommentaire->createView(),
+                'comByPdt'=>$comByPdt
+            ]
+        );
     }
 
     public function indexAction()
@@ -107,7 +96,10 @@ class ProduitController extends Controller
             $this->get("session")->getFlashBag()
                 ->add("success","1 produit a été créé");
         }
-        return $this->render('WaBackBundle:Produit:formProduit.html.twig', ["formulaireProduit"=>$formProduit->createView()]);
+        return $this->render('WaBackBundle:Produit:formProduit.html.twig',
+            [
+                "formulaireProduit"=>$formProduit->createView()
+            ]);
     }
 
     public function updateAction(Request $request, $id){

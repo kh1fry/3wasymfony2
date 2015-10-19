@@ -20,12 +20,65 @@
         <div class="box-footer">
             Identifiant {{ produit.id }}
         </div><!-- /.box-footer-->
+        <div class="box-footer">
+            Catégorie {{(produit.categorie.title)}}
+        </div><!-- /.box-footer-->
+
     </div>
     <div class="btn-group">
         <a href="" class="btn btn-warning">Editer</a>
-        {{ dump(produit) }}
-        <p>{{(produit.categorie.title)}}</p>
+        {#{{ dump(produit) }}#}
         <a href="{{ path('wa_back_produit_delete', {id:produit.id}) }}" class="btn btn-danger">Supprimer</a>
+    </div>
+
+    {#
+    Affichage des commentaire
+    #}
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Liste commentaires</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <div class="box-body table-responsive no-padding">
+            <table id="produitAction" class="table table-hover">
+                <tr>
+                    <th>ID</th>
+                    <th>Auteur</th>
+                    <th>Commentaire</th>
+                    <th>Actif</th>
+                </tr>
+                {% for com in comByPdt %}
+                    <tr>
+                        <td>{{ com.id }}</td>
+                        <td>{{ com.auteur }}</td>
+                        <td>{{ com.contenu }}
+                        <td>{{ com.active}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div><!-- /.box-body -->
+    </div>
+    {# Appel du fichier formCommentaire.html.twig dans le dossier Commentaire pour l'inclure
+    {% include 'WaBackBundle:Commentaire:formCommentaire.html.twig' with{'formulaireCommentaire' : formulaireCommentaire} only %}
+    #}
+
+    {# affichage du formulaire du commentaire #}
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Ajouter un commentaire</h3>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <div class="box-body">
+            {{ form_start(formulaireCommentaire, {attr : {novalidate:"novalidate"}} ) }}
+            {{ form_errors(formulaireCommentaire) }}
+            {{ form_end(formulaireCommentaire) }}
+        </div>
     </div>
 
 {% endblock %}

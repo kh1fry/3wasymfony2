@@ -16,11 +16,7 @@ class LoadProduitData extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager){
         $faker = \Faker\Factory::create('fr_FR');
 
-        // generate data by accessing properties
-        /*
-        echo $faker->name;
-        die;
-        */
+
 
         for($i=0; $i <10; $i++){
             //VOir la doc en tapant faker.php lien github (https://github.com/fzaninotto/Faker)
@@ -30,10 +26,8 @@ class LoadProduitData extends AbstractFixture implements OrderedFixtureInterface
             $produit->setQuantity($faker->numberBetween(0,1));
             $produit->setDescription($faker->text(10));
             $produit->setDateCreated($faker->dateTimeThisYear);
-            // Je récupère toutes les catégories grâce à $this->getReference("categ")
-            // J'utilise $faker->randomElement afin de prendre une catégorie au hasard dans toutes les catégories
-            //$categorie=$faker->randomElement($this->getReference("categ"));
-            $categorie=$this->getReference("categ");
+
+            $categorie=$this->getReference("categ_".$i);
             $produit->setCategorie($categorie);
             $produit->setMarque($manager->getRepository('WaBackBundle:Marque')->find(1));
 

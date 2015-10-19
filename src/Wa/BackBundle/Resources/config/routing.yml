@@ -34,3 +34,6 @@ wa_back_resource_produit:
     #Prefix définit le début des urls pr un fichier
     prefix:   /
 
+wa_back_commentaire:
+    resource: "@WaBackBundle/Resources/config/routing/commentaire.yml"
+    prefix:   /commentaire

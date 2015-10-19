@@ -190,13 +190,15 @@ class Categorie
     }
 
     /**
-     * @Assert\True(message="le title ne doit pas être reprit dans la description")
+     * @Assert\Callback
      */
-    public function isInterdit()
+    public function isInterdit(ExecutionContextInterface $context)
     {
-        if (preg_match("/\b(".$this->title.")\b/i",$this->description)){
-            return false;
-        }else{ return true;}
+        /*if (preg_match("/\b(".$this->title.")\b/i",$this->description)){
+            $context->buildViolation('Le titre ne doit pas être compris dans la description')
+                ->atPath('title')
+                ->addViolation();
+        }*/
     }
 
     /*public function __toString()
