@@ -1,6 +1,10 @@
-{% extends '::base.html.twig' %}
+{% extends 'WaBackBundle::layout.html.twig' %}
 
-{% block body -%}
+{% block title %}
+    {{ entity.titre }}
+{% endblock %}
+
+{% block content %}
     <h1>Marque</h1>
 
     <table class="record_properties">

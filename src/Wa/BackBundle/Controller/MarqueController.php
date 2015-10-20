@@ -4,8 +4,10 @@ namespace Wa\BackBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use Wa\BackBundle\Entity\Marque;
+use Wa\BackBundle\Entity\Produit;
 use Wa\BackBundle\Form\MarqueType;
 
 /**
@@ -19,16 +21,26 @@ class MarqueController extends Controller
      * Lists all Marque entities.
      *
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('WaBackBundle:Marque')->findAll();
+        $entities = $em->getRepository('WaBackBundle:Marque')->afficherMarques();
 
-        return $this->render('WaBackBundle:Marque:index.html.twig', array(
-            'entities' => $entities,
-        ));
+        $paginator  = $this->get('knp_paginator');
+        $entities = $paginator->paginate(
+            $entities,
+            $request->query->getInt('page', 1)/*page number*/,
+            3/*limit per page*/
+        );
+
+        return $this->render('WaBackBundle:Marque:index.html.twig',
+            [
+                'entities' => $entities,
+            ]
+        );
     }
+
     /**
      * Creates a new Marque entity.
      *
@@ -89,22 +101,28 @@ class MarqueController extends Controller
 
     /**
      * Finds and displays a Marque entity.
+     * entity = nom de la variable
+     * id= variable du routing (path: /marque/{id}/show)
+     * slug= nom de la colonne dans la bdd
+     * @ParamConverter("marque", class="WaBackBundle:Marque", options={"mapping" : {"id" = "slug"}})
      *
      */
-    public function showAction($id)
+    public function showAction(Marque $marque)
     {
+        //die(dump($marque));
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('WaBackBundle:Marque')->find($id);
+        //$entity = $em->getRepository('WaBackBundle:Marque')->findOneBy(["slug"=>$id]);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Marque entity.');
-        }
 
-        $deleteForm = $this->createDeleteForm($id);
+        /*if (!$entity) {
+            throw $this->createNotFoundException('Urnable to find Maque entity.');
+        }*/
+
+        $deleteForm = $this->createDeleteForm($marque->getId());
 
         return $this->render('WaBackBundle:Marque:show.html.twig', array(
-            'entity'      => $entity,
+            'entity'      => $marque,
             'delete_form' => $deleteForm->createView(),
         ));
     }

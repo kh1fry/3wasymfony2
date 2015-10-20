@@ -50,7 +50,10 @@
                     <th>Commentaire</th>
                     <th>Actif</th>
                 </tr>
-                {% for com in comByPdt %}
+                {# Avant on utilisait une requête pour afficher
+                   Maintenant on passe par la collection de commentaires#}
+                {#{% for com in comByPdt %}#}
+                {% for com in produit.commentaires if com.active %}
                     <tr>
                         <td>{{ com.id }}</td>
                         <td>{{ com.auteur }}</td>

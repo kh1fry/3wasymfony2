@@ -58,7 +58,7 @@ class Commentaire
     /**
      * @var \Integer
      *
-     * @ORM\ManyToOne(targetEntity="Produit")
+     * @ORM\ManyToOne(targetEntity="Produit", inversedBy="commentaires")
      * @ORM\JoinColumn(name="produit_id", referencedColumnName="id", nullable=false)
      *
      */
@@ -234,15 +234,13 @@ class Commentaire
     /**
      * @Assert\Callback
      */
-    public function isInterdit(ExecutionContextInterface $context)
+   /* public function isInterdit(ExecutionContextInterface $context)
     {
-        /*$tabMotsInterdit=["
-
-        "];*/
+        //$tabMotsInterdit=[""];
         if (preg_match("/\b(con|connard)\b/i",$this->contenu)){
             $context->buildViolation('Votre commentaire comprend des mots interdits')
                 ->atPath('contenu')
                 ->addViolation();
         }
-    }
+    }*/
 }

@@ -194,11 +194,11 @@ class Categorie
      */
     public function isInterdit(ExecutionContextInterface $context)
     {
-        /*if (preg_match("/\b(".$this->title.")\b/i",$this->description)){
+        if (preg_match("/\b(".$this->title.")\b/i",$this->description)){
             $context->buildViolation('Le titre ne doit pas être compris dans la description')
                 ->atPath('title')
                 ->addViolation();
-        }*/
+        }
     }
 
     /*public function __toString()

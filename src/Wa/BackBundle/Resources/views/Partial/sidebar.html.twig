@@ -23,7 +23,7 @@
             <!-- /.search form -->
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
-                <li class="header">DASHBOARD</li>
+                <li class="header"><i class="fa fa-dashboard"></i> <span>DASHBOARD</span></li>
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-dashboard"></i> <span>Catégories</span> <i class="fa fa-angle-left pull-right"></i>
@@ -78,13 +78,9 @@
                     </ul>
                 </li>
                 <li class="treeview active">
-                    <a href="#">
+                    <a href="{{ path('commentaires') }}">
                         <i class="fa fa-edit"></i> <span>Commentaires</span>
-                        <i class="fa fa-angle-left pull-right"></i>
                     </a>
-                    <ul class="treeview-menu">
-                        <li class="active"><a href="{{ path('commentaires') }}"><i class="fa fa-circle-o"></i> Afficher</a></li>
-                    </ul>
                 </li>
                 <li class="treeview">
                     <a href="#">

@@ -2,6 +2,7 @@
 
 namespace Wa\BackBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -74,9 +75,15 @@ class Produit
      */
     private $marque;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Commentaire", mappedBy="produit", cascade={"persist", "remove"})
+     */
+    private $commentaires;
+
     public function __construct(){
         $this->dateCreated= new \Datetime("now");
         $this->quantity= 1;
+        $this->commentaires = new ArrayCollection();
     }
 
     /**
@@ -258,5 +265,39 @@ class Produit
     public function getMarque()
     {
         return $this->marque;
+    }
+
+    /**
+     * Add commentaire
+     *
+     * @param \Wa\BackBundle\Entity\Commentaire $commentaire
+     *
+     * @return Produit
+     */
+    public function addCommentaire(\Wa\BackBundle\Entity\Commentaire $commentaire)
+    {
+        $this->commentaires[] = $commentaire;
+
+        return $this;
+    }
+
+    /**
+     * Remove commentaire
+     *
+     * @param \Wa\BackBundle\Entity\Commentaire $commentaire
+     */
+    public function removeCommentaire(\Wa\BackBundle\Entity\Commentaire $commentaire)
+    {
+        $this->commentaires->removeElement($commentaire);
+    }
+
+    /**
+     * Get commentaires
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCommentaires()
+    {
+        return $this->commentaires;
     }
 }

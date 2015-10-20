@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  *
  * @ORM\Table(name="image")
  * @ORM\Entity(repositoryClass="Wa\BackBundle\Repository\ImageRepository")
- * /**
+ *
  * @ORM\HasLifecycleCallbacks
  */
 class Image

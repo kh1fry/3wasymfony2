@@ -10,4 +10,11 @@ namespace Wa\BackBundle\Repository;
  */
 class MarqueRepository extends \Doctrine\ORM\EntityRepository
 {
+    //AFFICHER LISTE MARQUE
+    public function afficherMarques(){
+        $query= $this->createQueryBuilder("marque")
+            ->getQuery();
+
+        return $query;
+    }
 }

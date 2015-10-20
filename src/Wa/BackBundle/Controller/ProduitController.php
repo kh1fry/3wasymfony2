@@ -12,14 +12,29 @@ use Wa\BackBundle\Form\CommentaireType;
 use Wa\BackBundle\Repository\CategorieRepository;
 use Wa\BackBundle\Entity\Produit;
 use Wa\BackBundle\Form\ProduitType;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 //use Symfony\Component\HttpFoundation\Response;
 
 class ProduitController extends Controller
 {
 
     // Produit $product : equivalent à $em->getRepository("WaBackBundle:Produit")->find($id)
-    public function showAction(Produit $produit, Request $request){
+//    public function showAction(Produit $produit, Request $request){
+    // je n'utilise plus le paramconvert Produit $produit mais je vais faire une requête moi
+    /**
+     * @param $id
+     * @param Request $request
+     * @return Response
+     * @ParamConverter("produit", options={"repository_method" = "findProductWithCommments"})
+     */
+    public function showAction($id, Request $request, Produit $produit){
+
+        //On récupère la cnx° (Doctrine)
+        $em = $this->getDoctrine()->getManager();
+
+        //$produit = $em->getRepository('WaBackBundle:Produit')->findProductWithCommments($id);
+
+
         //Creation formulaire
         $commentaires = new Commentaire();
 
@@ -28,8 +43,7 @@ class ProduitController extends Controller
 
         //Recupère tt ce que le user tape dans le form
         $formCommentaire->handleRequest($request);
-        //On récupère la cnx° (Doctrine)
-        $em = $this->getDoctrine()->getManager();
+
         if($formCommentaire->isValid()) {
 
             // Lier le commentaire au produit
@@ -47,8 +61,12 @@ class ProduitController extends Controller
         }
 
         //AFFICHER LES COMMENTAIRES PAR PRODUIT
-        $comByPdt= $em->getRepository("WaBackBundle:Commentaire")
-            ->commentByPdt(18);
+//        $comByPdt= $em->getRepository("WaBackBundle:Commentaire")
+//            ->commentByPdt(18);
+        // je met à zéro ce tableau car il existe une propriété commentaires dans l'entité produit
+        // on va donc utiliser cette propriété plutôt que la requête du dessus permettant de
+        // récupérer les commentaires
+        $comByPdt = [];
 
         return $this->render('WaBackBundle:Produit:show.html.twig',
             [

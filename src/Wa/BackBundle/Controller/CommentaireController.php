@@ -44,7 +44,4 @@ class CommentaireController extends Controller
 
     }
 
-    public function isInterdit(){
-
-    }
 }

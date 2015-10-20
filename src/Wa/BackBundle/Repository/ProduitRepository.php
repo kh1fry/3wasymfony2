@@ -130,7 +130,7 @@ class ProduitRepository extends \Doctrine\ORM\EntityRepository
                 ->setParameter('value', $value)
                 ->getQuery();
 
-        die(dump($query->getResult()));
+        //die(dump($query->getResult()));
         return $query->getResult();
     }
 
@@ -163,6 +163,19 @@ class ProduitRepository extends \Doctrine\ORM\EntityRepository
 
         //die(dump($query->getResult()));
         return $query->getResult();
+    }
+
+    public function findProductWithCommments($id)
+    {
+        $query= $this->getEntityManager()
+            ->createQuery("
+                        SELECT prod , com
+                        FROM WaBackBundle:Produit prod
+                        LEFT JOIN prod.commentaires com
+                        WHERE prod.id = :idProd
+                    ")->setParameter('idProd', $id);
+
+        return $query->getSingleResult();
     }
 
 
