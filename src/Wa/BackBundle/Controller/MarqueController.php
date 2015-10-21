@@ -5,7 +5,6 @@ namespace Wa\BackBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-
 use Wa\BackBundle\Entity\Marque;
 use Wa\BackBundle\Entity\Produit;
 use Wa\BackBundle\Form\MarqueType;
@@ -14,7 +13,7 @@ use Wa\BackBundle\Form\MarqueType;
  * Marque controller.
  *
  */
-class MarqueController extends Controller
+class MarqueController extends BaseController
 {
 
     /**
@@ -120,6 +119,20 @@ class MarqueController extends Controller
         }*/
 
         $deleteForm = $this->createDeleteForm($marque->getId());
+        /* UTILISATION SANS L'EXTERNALISATION DU BREADCRUMB
+        $breadcrumbs = $this->get("white_october_breadcrumbs");
+        // Simple example
+        $breadcrumbs->addRouteItem("Dashboard", "wa_back_homepage");
+        $breadcrumbs->addRouteItem("Marque", "marque");
+        $breadcrumbs->addItem($marque->getTitre(), $this->generateUrl('marque_show', [
+            'id'=>$marque->getSlug()
+        ]));*/
+        //On récupère la base du breadcrump
+        $this->breadCrumbs(
+            [
+            'Marque' => $this->generateUrl("marque"),
+            $marque->getTitre() => ''
+            ]);
 
         return $this->render('WaBackBundle:Marque:show.html.twig', array(
             'entity'      => $marque,

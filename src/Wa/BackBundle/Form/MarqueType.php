@@ -5,6 +5,8 @@ namespace Wa\BackBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Wa\BackBundle\Entity\Tag;
+use Wa\BackBundle\Repository\TagRepository;
 
 class MarqueType extends AbstractType
 {
@@ -17,9 +19,16 @@ class MarqueType extends AbstractType
         $builder
             ->add('titre')
             ->add('slug')
-        ;
+            ->add('tags', 'entity',[
+                "class"=>"WaBackBundle:Tag",
+                "multiple"=>true,
+                "choice_label"=>"nom",
+                "query_builder"=> function(TagRepository $er){
+                    return $er->findAllTagsOrder();
+                }
+                ]);
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */

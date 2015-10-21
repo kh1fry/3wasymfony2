@@ -4,8 +4,11 @@
     {{ entity.titre }}
 {% endblock %}
 
-{% block content %}
+{% block h1 %}
     <h1>Marque</h1>
+    {{ wo_render_breadcrumbs() }}
+{% endblock %}
+{% block content %}
 
     <table class="record_properties">
         <tbody>

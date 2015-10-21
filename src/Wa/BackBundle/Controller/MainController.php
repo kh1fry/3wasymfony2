@@ -2,7 +2,9 @@
 
 namespace Wa\BackBundle\Controller;
 
+use MetzWeb\Instagram\Instagram;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -47,6 +49,60 @@ class MainController extends Controller
         $catSansImg= $em->getRepository("WaBackBundle:Categorie")
             ->catSansImg();
 
+        //UTILISER L'APPLI INSTAGRAM
+        // Chemin ou on crée le fichier
+        $file = __DIR__."/../../../../app/cache/cache_instagram.txt";
+        $fs = new Filesystem();
+        //Timestamp du cache
+        $timeCache = time() - ( 1 * 60 );
+
+        //On vérifie qu'on a fait un cache d'1 min avec un dump
+        //dump(date ("F d Y H:i:s.", filemtime($file)));
+        //dump(date ("F d Y H:i:s.", $timeCache));
+        //die(dump($timeCache, filemtime($file)));
+
+        //Si le fichier existe et que le temps d'utilisation de la dernière modif du fichier > timestamp
+        //prévu dans le cache
+        clearstatcache();
+        if ($fs->exists($file) && (filemtime($file) > $timeCache)){
+            //On récupère le contenu du fichier cacheinsta
+            $mesImages = unserialize(file_get_contents($file));
+            //die('cache');
+        }
+        else {
+            //die(dump($this->getParameter('client_id_instagram')));
+            $instagram = new Instagram(array(
+                'apiKey' => $this->getParameter('client_id_instagram'),
+                'apiSecret' => $this->getParameter('client_secret_instagram'),
+                'apiCallback' => $this->getParameter('callback_instagram')
+            ));
+
+            //Récupérer le token après le code=
+            //die(dump($instagram->getLoginUrl()));
+            $instagram->setAccessToken($this->getParameter('token_instagram'));
+            //die(dump($instagram->getPopularMedia()));
+
+            $mesImages = $instagram->getUserMedia($this->getParameter('id_instagram'));
+
+
+            //Mettre les infos dans le fichier
+            //Création du fichier
+            $fs->touch($file);
+            //Mettre les images dans le fichier
+            $fs->dumpFile($file, serialize($mesImages));
+            //dump(file_get_contents($file));
+            //dump($mesImages);
+            //die('Utilisation du cache');
+        }
+
+        //die(dump($mesImages));
+        //Parcourir l'objet et afficher ce qu'on veut
+        /*foreach($instagram->getPopularMedia()->data as $media)
+        {
+            //die(dump($media));
+            echo "<img src='".$media->images->thumbnail->url."'>";
+            //die;
+        }*/
 
         return $this->render('WaBackBundle:Main:admin.html.twig',
             [
@@ -56,7 +112,8 @@ class MainController extends Controller
                 'productSansCat'=> $pdtSansCat,
                 'nbrPdtByCat'=>$nbrPdtByCat,
                 'pdtPrixMax'=>$pdtPrixMax,
-                'catSansimage'=>$catSansImg
+                'catSansimage'=>$catSansImg,
+                'instagram'=>$mesImages
             ]);
     }
 

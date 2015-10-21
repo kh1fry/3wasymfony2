@@ -1,7 +1,8 @@
 {% extends 'WaBackBundle::layout.html.twig' %}
 
 {% block content %}
-    <h1>Marque list</h1>
+
+    <h1>Marque list</h1>{{ wo_render_breadcrumbs() }}
     {# GERER LA PAGINATION #}
     <div class="count">
         {{ entities.getTotalItemCount }}

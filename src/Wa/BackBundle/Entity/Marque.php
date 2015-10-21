@@ -48,6 +48,19 @@ class Marque
     private $slug;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Tag")
+     * @ORM\JoinTable(name="marque_tag",
+     *                joinColumns={
+     *                      @ORM\JoinColumn(name="marque_id", referencedColumnName="id")
+     *                },
+     *                inverseJoinColumns={
+     *                      @ORM\JoinColumn(name="tag_id", referencedColumnName="id")
+     *                }
+     *
+     * )
+     */
+    private $tags;
+    /**
      * Get id
      *
      * @return integer
@@ -137,5 +150,46 @@ class Marque
     public function getSlug()
     {
         return $this->slug;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add tag
+     *
+     * @param \Wa\BackBundle\Entity\Tag $tag
+     *
+     * @return Marque
+     */
+    public function addTag(\Wa\BackBundle\Entity\Tag $tag)
+    {
+        $this->tags[] = $tag;
+
+        return $this;
+    }
+
+    /**
+     * Remove tag
+     *
+     * @param \Wa\BackBundle\Entity\Tag $tag
+     */
+    public function removeTag(\Wa\BackBundle\Entity\Tag $tag)
+    {
+        $this->tags->removeElement($tag);
+    }
+
+    /**
+     * Get tags
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTags()
+    {
+        return $this->tags;
     }
 }

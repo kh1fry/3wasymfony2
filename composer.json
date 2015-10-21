@@ -22,7 +22,9 @@
         "imagine/imagine": "^0.6.3",
         "fzaninotto/faker": "^1.5",
         "stof/doctrine-extensions-bundle": "^1.2",
-        "knplabs/knp-paginator-bundle": "^2.5"
+        "knplabs/knp-paginator-bundle": "^2.5",
+        "whiteoctober/breadcrumbs-bundle": "^1.2",
+        "cosenary/instagram": "^2.3"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
