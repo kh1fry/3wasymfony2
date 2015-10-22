@@ -48,7 +48,7 @@ class Marque
     private $slug;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Tag")
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="marques", cascade={"persist"})
      * @ORM\JoinTable(name="marque_tag",
      *                joinColumns={
      *                      @ORM\JoinColumn(name="marque_id", referencedColumnName="id")
@@ -192,4 +192,6 @@ class Marque
     {
         return $this->tags;
     }
+
+
 }

@@ -37,3 +37,7 @@ wa_back_resource_produit:
 wa_back_commentaire:
     resource: "@WaBackBundle/Resources/config/routing/commentaire.yml"
     prefix:   /commentaire
+
+wa_back_resource_tag:
+    resource: "@WaBackBundle/Resources/config/routing/tag.yml"
+    prefix:   /tag

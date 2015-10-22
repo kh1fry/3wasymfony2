@@ -3,14 +3,12 @@
 namespace Wa\BackBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Tag
  *
  * @ORM\Table(name="tag")
  * @ORM\Entity(repositoryClass="Wa\BackBundle\Repository\TagRepository")
- *
  */
 class Tag
 {
@@ -78,40 +76,4 @@ class Tag
     }
 
 
-
-    /**
-     * Add marque
-     *
-     * @param \Wa\BackBundle\Entity\Marque $marque
-     *
-     * @return Tag
-     */
-    public function addMarque(\Wa\BackBundle\Entity\Marque $marque)
-    {
-        $this->marques[] = $marque;
-        //die(dump($this));
-        $marque->addTag($this);
-
-        return $this;
-    }
-
-    /**
-     * Remove marque
-     *
-     * @param \Wa\BackBundle\Entity\Marque $marque
-     */
-    public function removeMarque(\Wa\BackBundle\Entity\Marque $marque)
-    {
-        $this->marques->removeElement($marque);
-    }
-
-    /**
-     * Get marques
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getMarques()
-    {
-        return $this->marques;
-    }
 }

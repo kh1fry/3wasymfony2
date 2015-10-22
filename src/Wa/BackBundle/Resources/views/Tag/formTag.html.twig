@@ -1,0 +1,8 @@
+{% extends 'WaBackBundle::layout.html.twig' %}
+{% block content %}
+    {{ parent() }}
+
+    <h1>Créer un tag</h1>
+    {{ form_start(formTag, {attr : {novalidate:"novalidate"}} ) }}
+    {{ form_end(formTag) }}
+{% endblock %}

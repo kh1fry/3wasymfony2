@@ -2,39 +2,57 @@
 
 {% block content %}
 
-    <h1>Marque list</h1>{{ wo_render_breadcrumbs() }}
+{{ wo_render_breadcrumbs() }}
     {# GERER LA PAGINATION #}
-    <div class="count">
-        {{ entities.getTotalItemCount }}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Listes marques</h3><span class="label label-success">{{ entities.getTotalItemCount }}</span>
+                    <div class="box-tools">
+                        <div class="input-group" style="width: 150px;">
+                            <input type="text" name="table_search" class="form-control input-sm pull-right" placeholder="Search">
+                            <div class="input-group-btn">
+                                <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body table-responsive no-padding">
+                    <table id="produitAction" class="table table-hover">
+                        <thead>
+                        <tr>
+                            {# sorting of properties based on query components #}
+                            <th>{{ knp_pagination_sortable(entities, 'Id', 'marque.id') }}</th>
+                            <th{% if entities.isSorted('marque.Titre') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(entities, 'Titre', 'marque.titre') }}</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Marques</th>
+                            <th>Slug</th>
+                            <th>Actions</th>
+                        </tr>
+                        {% for marque in entities %}
+                            <tr>
+                                <td>{{ marque.id }}</td>
+                                <td>{{ marque.titre }}</td>
+                                <td>{{ marque.slug }}</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a href="{{ path('marque_show', {id: marque.id}) }}" class="btn btn-primary">Voir</a>
+                                        <a href="{{ path('marque_edit', {id: marque.id}) }}" class="btn btn-warning">Editer</a>
+                                        <a href="{{ path('marque_delete', {id:marque.id}) }}" class="btn btn-danger delete">Supprimer</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div>
     </div>
-    <table class="records_list">
-        <thead>
-            <tr>
-                {# sorting of properties based on query components #}
-                <th>{{ knp_pagination_sortable(entities, 'Id', 'marque.id') }}</th>
-                <th{% if entities.isSorted('marque.Titre') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(entities, 'Titre', 'marque.titre') }}</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('marque_show', { 'id': entity.slug }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.titre }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('marque_show', { 'id': entity.slug }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('marque_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
     {# display navigation #}
     <div class="navigation">
         {{ knp_pagination_render(entities) }}

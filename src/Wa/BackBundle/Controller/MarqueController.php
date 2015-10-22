@@ -55,7 +55,7 @@ class MarqueController extends BaseController
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('marque_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('marque_show', array('id' => $entity->getSlug())));
         }
 
         return $this->render('WaBackBundle:Marque:new.html.twig', array(
@@ -73,7 +73,7 @@ class MarqueController extends BaseController
      */
     private function createCreateForm(Marque $entity)
     {
-        $form = $this->createForm(new MarqueType(), $entity, array(
+        $form = $this->createForm(new MarqueType($this->getDoctrine()->getManager()), $entity, array(
             'action' => $this->generateUrl('marque_create'),
             'method' => 'POST',
         ));
@@ -96,6 +96,8 @@ class MarqueController extends BaseController
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
+
+
     }
 
     /**

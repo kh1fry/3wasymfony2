@@ -1,0 +1,7 @@
+tags:
+    path:     /
+    defaults: { _controller: "WaBackBundle:Tag:index" }
+
+tag_new:
+    path:    /new
+    defaults: { _controller: "WaBackBundle:Tag:new" }
