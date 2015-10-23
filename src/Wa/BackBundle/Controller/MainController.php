@@ -8,12 +8,20 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints as Assert;
+use Wa\BackBundle\Util;
 
 class MainController extends Controller
 {
 
     public function adminAction()
     {
+        /*dump($this->getDoctrine()->getManager());
+        dump($this->getDoctrine()->getManager());
+        die;*/
+        /*$utility = $this->get('wa_back.util');
+        echo $utility->slugify('salut ludo');
+        dump($utility);
+        die;*/
         //Doctrine pour gérer des bbd !=
         //Manager pour gérer des bundles !=
         $em= $this->getDoctrine()

@@ -41,3 +41,7 @@ wa_back_commentaire:
 wa_back_resource_tag:
     resource: "@WaBackBundle/Resources/config/routing/tag.yml"
     prefix:   /tag
+
+wa_back_resource_panier:
+    resource: "@WaBackBundle/Resources/config/routing/panier.yml"
+    prefix:   /

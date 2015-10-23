@@ -1,4 +1,14 @@
+parameters:
+  competences:
+    php: 1
+    html: 5
+    css: 4
+
 services:
 #    wa_back.example:
 #        class: Wa\BackBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]
+
+  wa_back.util:
+    class: Wa\BackBundle\Util\Utility
+    arguments: [@doctrine.orm.entity_manager, %database_name%, %competences%]

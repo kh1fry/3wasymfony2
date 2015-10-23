@@ -1,0 +1,11 @@
+wa_back_panier:
+    path: /panier/{id}
+    defaults: { _controller: WaBackBundle:Panier:add }
+
+wa_back_panier_display:
+    path: /panier
+    defaults: { _controller: WaBackBundle:Panier:index }
+
+wa_back_panier_delete:
+    path: /delete/{id}
+    defaults: { _controller: WaBackBundle:Panier:delete}
