@@ -1,7 +1,7 @@
 {% extends 'WaBackBundle::layout.html.twig' %}
 
 {% block content %}
-    {% if pdtPanier == false %}
+    {% if infoPanier.pdtPanier == false %}
         <h3>LE PANIER EST VIDE</h3>
     {% else %}
         <table id="cart" class="table table-hover table-condensed">
@@ -15,7 +15,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for prod in pdtPanier %}
+            {% for prod in infoPanier.pdtPanier %}
                 <tr>
                     <td data-th="Product">
                         <div class="row">
@@ -28,9 +28,9 @@
                     </td>
                     <td data-th="Price">{{ prod.price }}</td>
                     <td data-th="Quantity">
-                        <input type="number" class="form-control text-center" value="{{ prod.quantity }}">
+                        <input type="number" class="form-control text-center" value="{{ prod.qtyPanier }}">
                     </td>
-                    <td data-th="Subtotal" class="text-center">{{ prod.quantity * prod.price }}</td>
+                    <td data-th="Subtotal" class="text-center">{{ prod.qtyPanier * prod.price }}</td>
                     <td class="actions" data-th="">
                         <button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
                         <a href="{{ path('wa_back_panier_delete',{id:prod.id}) }}"><button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button></a>
@@ -45,7 +45,7 @@
             <tr>
                 <td><a href="{{ path('wa_back_produit') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
                 <td colspan="2" class="hidden-xs"></td>
-                <td class="hidden-xs text-center"><strong>{{ total }}</strong></td>
+                <td class="hidden-xs text-center"><strong>{{ infoPanier.total }}</strong></td>
                 <td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
             </tr>
             </tfoot>

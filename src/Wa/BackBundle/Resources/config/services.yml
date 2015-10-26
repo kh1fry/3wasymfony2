@@ -12,3 +12,7 @@ services:
   wa_back.util:
     class: Wa\BackBundle\Util\Utility
     arguments: [@doctrine.orm.entity_manager, %database_name%, %competences%]
+
+  wa_back.panier:
+    class: Wa\BackBundle\Util\Panier
+    arguments: [@doctrine.orm.entity_manager, @session]

@@ -1,0 +1,57 @@
+{% extends 'WaBackBundle::layout.html.twig' %}
+{% block body %}
+    {% if error %}
+        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+
+
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="../../index2.html"><b>Connexion Dashboard</b></a>
+        </div><!-- /.login-logo -->
+        <div class="login-box-body">
+            <p class="login-box-msg">Connectez vous pour démarrer votre session</p>
+            <form action="{{ path('wa_back_login_check') }}" method="post">
+                <div class="form-group has-feedback">
+                    <input type="username" id="username" name="_username" class="form-control" placeholder="Login" value="{{ last_username }}">
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <input name="_password" type="password" id="password" class="form-control" placeholder="Password">
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="checkbox icheck">
+
+                        </div>
+                    </div><!-- /.col -->
+                    <div class="col-xs-6">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Login</button>
+                    </div><!-- /.col -->
+                </div>
+            </form>
+            <a href="#">I forgot my password</a><br>
+
+
+        </div><!-- /.login-box-body -->
+    </div><!-- /.login-box -->
+
+    <!-- jQuery 2.1.4 -->
+    <script src="../../plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="../../bootstrap/js/bootstrap.min.js"></script>
+    <!-- iCheck -->
+    <script src="../../plugins/iCheck/icheck.min.js"></script>
+    <script>
+        $(function () {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%' // optional
+            });
+        });
+    </script>
+{% endblock %}

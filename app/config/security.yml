@@ -1,11 +1,35 @@
 # To get started with security, check out the documentation:
 # http://symfony.com/doc/current/book/security.html
 security:
+#Pour encoder
+    encoders:
+        Symfony\Component\Security\Core\User\User: plaintext
+        Wa\BackBundle\Entity\User: plaintext
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
         in_memory:
-            memory: ~
+            memory:
+                users:
+                    #login
+                    admin:
+                        password: admin
+                        roles: ROLE_ADMIN #un rôle commence toujours par ROLE_
+                    #autre façon d'écrire
+                    test: { password: test, roles: ROLE_COMMERCIAL }
+                    superadmin: { password: azerty, roles: ROLE_SUPER_ADMIN }
+
+        #On fait le lien avec la classe USER
+        user_admin:
+            #On définit la propriété pour se connecter
+            entity: { class: Wa\BackBundle\Entity\User, property: login}
+
+    #Définir les droits/une hiérarchie
+    role_hierarchy:
+        # si j'essaye d'accéder à /product en tant que commercial sachant qu'un commercial peut y accéder
+        # alors en tant qu'admin je pourrai également y accéder
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_ADMIN: ROLE_COMMERCIAL
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -13,12 +37,61 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+        #On définit un autre firewall pour gérer le form de conx°
+        loginfirewall:
+            #Le $ permet de dire termine par on indique a login_check que la validation se fait
+            # par le firewall qu'on a définit admin/login
+            #Tout ce qu'il y a derrière login/ c'est mon firewall qui prend le relai grâce au login$
+            pattern: ^/admin/login$
+            security: false
+
         main:
-            anonymous: ~
+            #Bloque l'accès à ttes les pages qui commence par admin / Pattern permet d'être plus précis
+            pattern: ^/admin
+            anonymous: false
             # activate different ways to authenticate
 
-            # http_basic: ~
+            #Ce qui on la possibilité de changer d'user sont ROLE_SUPER_NANA le mettre aussi dans hierarchie
+            switch_user: { role: ROLE_SUPER_ADMIN, parameter: _changement_de_compte }
+            # pour changer d'utilisateur il faut ajouter dans l'url ?_switch_user=admin
+            # pour revenir à l'état normal il faut ajouter dans l'url ?_switch_user=_exit
+
+            #Créer un provider qui fait le lien avec celui du haut
+            provider: user_admin
+
+            #http_basic:
+                #Le nom de la boite de dialogue
+                #realm: "Test SECU"
+                #Va chercher les infos du in memory pour te connecter en http_basic
+                #provider: in_memory
+
             # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
 
-            # form_login: ~
+            # Faire un formulaire de connexion du coup en commente http_basic
+            form_login:
+                login_path: wa_back_login
+                check_path: wa_back_login_check
+                #activation de la protection csrf
+                csrf_provider: security.csrf.token_manager
+
+                # spécifie l'url sur laquelle atterir si il n'y a rien en "mémoire"
+                default_target_path: wa_back_homepage
+                # oblige à rediriger sur le default_target_path
+                always_use_default_target_path: true
+            #Déconnexion gérer par Symfony
+            logout:
+                path: wa_back_logout
+                #Quand je me déconnecte j'arrive sur la page connexion
+                target: /admin/login
+
+            #Gérer le remember me / Le mettre dans le name de la case à cocher
+            remember_me:
+                key: "%secret%"
+                lifetime: 172800 # On retient pendant 2 jours (en secondes)
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+
+
+
+    #Définir les autorisations de connexion en fonction de l'authentification
+    access_control:
+    - { path: ^/admin, role: ROLE_ADMIN }

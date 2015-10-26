@@ -2,15 +2,19 @@
 
 namespace Wa\BackBundle\Controller;
 
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Wa\BackBundle\Entity\Produit;
+use Wa\BackBundle\Util\Panier;
 
 
 class PanierController extends Controller
 {
     /**** AJOUTER AU PANIER ***/
-    public function addAction(Request $request, $id)
+    public function addAction(Request $request, Produit $produit)
     {
+       /**** Sans la session
         //Récupérer la session
         $session= $request->getSession();
         //Supprimer la session
@@ -30,15 +34,20 @@ class PanierController extends Controller
 
         $session->set('panier',$allProducts);
         //die(dump('panier',$session->get('panier')));
+        *****FIN****/
 
+        /*** Avec la session ***/
+        $panier = $this->get('wa_back.panier');
+        //die(dump($panier));
+        $panier->add($produit);
 
         return $this->redirectToRoute('wa_back_panier_display');
     }
 
     /**** LISTER LES PRODUITS DU PANIER ***/
-    public function indexAction(Request $request)
+    public function indexAction(Request $request )
     {
-        //Récupérer l'entity manager
+        /*//Récupérer l'entity manager
         $em= $this->getDoctrine()->getManager();
 
         //Récupérer la session
@@ -50,21 +59,24 @@ class PanierController extends Controller
 
         //Variable pour récupérer le montant total du panier
         $total=0;
+
         //Pour chaque produit du panier
-        foreach ($session->get('panier') as $id){
+        foreach ($session->get('panier') as $idProduct => $qty){
+
             //Récupérer l'objet produit
-            $produit= $em->getRepository('WaBackBundle:Produit')->find($id);
+            $produit= $em->getRepository('WaBackBundle:Produit')->find($idProduct);
 
             //Calculer le montant total
             $total= $total + $produit->getPrice();
             //Ajouter dans le produit au tableau
             array_push($pdtPanier,$produit);
 
-        }
-
+        }*/
+        /*** Avec la session ***/
+        $panier = $this->get('wa_back.panier');
+        //die(dump($panier));
         return $this->render('WaBackBundle:Panier:index.html.twig',
-                            ["pdtPanier"=>$pdtPanier,
-                              "total"=>$total
+                            ["infoPanier"=>$panier->displayPanier(),
                             ]);
     }
 

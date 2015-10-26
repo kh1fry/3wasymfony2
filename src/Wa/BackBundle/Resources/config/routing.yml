@@ -45,3 +45,13 @@ wa_back_resource_tag:
 wa_back_resource_panier:
     resource: "@WaBackBundle/Resources/config/routing/panier.yml"
     prefix:   /
+
+wa_back_login:
+    path: /login
+    defaults: { _controller:WaBackBundle:Main:login }
+
+wa_back_login_check:
+    path: /login_check
+
+wa_back_logout:
+    path: /logout

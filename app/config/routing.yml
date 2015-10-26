@@ -1,4 +1,9 @@
+wa_front:
+    resource: "@WaFrontBundle/Resources/config/routing.yml"
+    prefix:   /
+
 wa_back:
     resource: "@WaBackBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /admin
+
 
