@@ -14,6 +14,7 @@ use Wa\BackBundle\Entity\Produit;
 use Wa\BackBundle\Form\ProduitType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 //use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class ProduitController extends Controller
 {
@@ -90,6 +91,9 @@ class ProduitController extends Controller
     }
 
     public function createAction(Request $request){
+        //Géstion des rôles => si je n'ai pas le rôle admin je revoie le msg
+        //$this->denyAccessUnlessGranted('ROLE_ADMIN', null, "Vous n'avez l'autorisation pour accéder à cette page");
+
         $produits = new Produit();
         /*$formProduit = $this->createFormBuilder($produits)
                             ->add("title","text")
@@ -120,6 +124,9 @@ class ProduitController extends Controller
             ]);
     }
 
+    /**
+     * @Security("has_role('ROLE_ADMIN')")
+     */
     public function updateAction(Request $request, $id){
         //Repository endroit ou il va chercher les requêtes personnalisées
         $em= $this->getDoctrine()->getManager();

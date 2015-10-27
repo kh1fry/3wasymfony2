@@ -46,6 +46,10 @@ wa_back_resource_panier:
     resource: "@WaBackBundle/Resources/config/routing/panier.yml"
     prefix:   /
 
+wa_back_resource_user:
+    resource: "@WaBackBundle/Resources/config/routing/user.yml"
+    prefix:   /
+
 wa_back_login:
     path: /login
     defaults: { _controller:WaBackBundle:Main:login }

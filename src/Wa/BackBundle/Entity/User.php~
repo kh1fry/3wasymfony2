@@ -2,12 +2,9 @@
 
 namespace Wa\BackBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\Role\Role;
-use Symfony\Component\Security\Core\User\AdvancedUserInterface;
-use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -337,17 +334,7 @@ class User implements UserInterface
      */
     public function getRoles()
     {
-        //die(dump($this->groupes-toArray()));
-        //return $this->groupes->toArray();
-        //Retourne les groupes
-        //return $this->groupes->toArray();
-        $roles = array();
-        foreach ($this->groupes as $group) {
-            $roles[] = $group->getRole();
-        }
-
-
-        return $roles;
+        return ["ROLE_ADMIN"];
     }
 
     /**
@@ -382,39 +369,5 @@ class User implements UserInterface
     {
         // TODO: Implement eraseCredentials() method.
     }
-
-    /**
-     * Add groupe
-     *
-     * @param \Wa\BackBundle\Entity\Groupe $groupe
-     *
-     * @return User
-     */
-    public function addGroupe(\Wa\BackBundle\Entity\Groupe $groupe)
-    {
-        $this->groupes[] = $groupe;
-
-        return $this;
-    }
-
-    /**
-     * Remove groupe
-     *
-     * @param \Wa\BackBundle\Entity\Groupe $groupe
-     */
-    public function removeGroupe(\Wa\BackBundle\Entity\Groupe $groupe)
-    {
-        $this->groupes->removeElement($groupe);
-    }
-
-    /**
-     * Get groupes
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getGroupes()
-    {
-        return $this->groupes;
-    }
-
 }
+

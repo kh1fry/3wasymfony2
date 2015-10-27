@@ -1,12 +1,22 @@
 # To get started with security, check out the documentation:
 # http://symfony.com/doc/current/book/security.html
 security:
-#Pour encoder
+#Pour encoder les mdp (quel est l'algo pr encoder les mdp
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
-        Wa\BackBundle\Entity\User: plaintext
+        Wa\BackBundle\Entity\User:
+        ### UTILISATION DU sha51 ######
+            #algorithm: sha512
+            #Ajouter de la complexite avec sha512
+            #encode_as_base64: true
+            #iterations: 1000
+        ### UTILISATION DU bcrypt (nécessite une version 5.5 de PHP) ######
+            algorithm: bcrypt
+            #Définir la longueur du mdp(entre 4 et 31)
+            cost: 15
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    #Définit d'ou viennent les users in_memory (in_memory =dans ce fichier) ou enites User
     providers:
         in_memory:
             memory:
@@ -21,8 +31,19 @@ security:
 
         #On fait le lien avec la classe USER
         user_admin:
-            #On définit la propriété pour se connecter
-            entity: { class: Wa\BackBundle\Entity\User, property: login}
+            #On définit la propriété pour se connecter (connexion avec le login)
+            #entity: { class: Wa\BackBundle\Entity\User, property: login}
+
+            #On définit la propriété pour se connecter (connexion avec l'email
+            #entity: { class: Wa\BackBundle\Entity\User, property: email}
+
+            #Permet de se connecter avec le log ou l'email se réfère à la classe UserRepository
+            entity: { class: Wa\BackBundle\Entity\User }
+
+        #Permet de fournir les admin créer par l'entiités et dans ce fichier
+        mix:
+            chain:
+                provider: [in_memory, user_admin]
 
     #Définir les droits/une hiérarchie
     role_hierarchy:
@@ -46,7 +67,8 @@ security:
             security: false
 
         main:
-            #Bloque l'accès à ttes les pages qui commence par admin / Pattern permet d'être plus précis
+            #Attrappe ttes les pages qui commence par admin / Pattern permet d'être plus précis
+            #Et sur ces urls je dois être connecté
             pattern: ^/admin
             anonymous: false
             # activate different ways to authenticate
@@ -56,8 +78,11 @@ security:
             # pour changer d'utilisateur il faut ajouter dans l'url ?_switch_user=admin
             # pour revenir à l'état normal il faut ajouter dans l'url ?_switch_user=_exit
 
-            #Créer un provider qui fait le lien avec celui du haut
-            provider: user_admin
+            #V.1 Créer un provider qui fait le lien avec celui du haut (l'entité)
+            #provider: user_admin
+
+            #V.2 Indiquer que le provider est mixe
+            provider: mix
 
             #http_basic:
                 #Le nom de la boite de dialogue
@@ -94,4 +119,4 @@ security:
 
     #Définir les autorisations de connexion en fonction de l'authentification
     access_control:
-    - { path: ^/admin, role: ROLE_ADMIN }
+    - { path: ^/admin, role: ROLE_COMMERCIAL }

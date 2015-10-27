@@ -25,14 +25,26 @@ class MyUserCommand extends ContainerAwareCommand
         // Récupération de doctrine
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
+        //Récupérer les log et mdp
+        $Login = $input->getArgument('login');
+        $Mdp = $input->getArgument('mdp');
+
         $user = new User();
+
+        //On récupère tout ce quil y a daans l'encoder au niveau du fichier yml
+        $factory = $this->getContainer()->get('security.encoder_factory');
+        // Je récupère l'encoder de la class Troiswa\BackBundle\Entity\User
+        $encoder = $factory->getEncoder($user);
+        //On encode le mdp
+        $newPassword = $encoder->encodePassword($Mdp, $user->getSalt());
+
         $user->setFirstname("Doudou");
         $user->setLastname("Le Banner");
-        $user->setEmail("doudou@gmail.com");
+        $user->setEmail("lulu@gmail.com");
         //Récupérer les arguments taper dans la console
-        $user->setLogin($input->getArgument('login'));
-        $user->setPassword($input->getArgument('mdp'));
-        $user->setGender(0);
+        $user->setLogin($Login);
+        $user->setPassword($newPassword);
+        $user->setGender(rand(0,1));
         $user->setAddress("OKLM");
         $user->setPhone("0606060606");
 

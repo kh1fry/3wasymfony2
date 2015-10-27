@@ -1,0 +1,3 @@
+wa_back_user_new:
+    path: /user/new
+    defaults: { _controller: WaBackBundle:User:new}
