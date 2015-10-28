@@ -76,7 +76,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository implements UserProvi
             );
         }
 
-        return $this->find($user->getId());
+        return $this->loadUserByUsername($user->getLogin());
     }
 
     /**

@@ -2,7 +2,32 @@
 
 {% block content %}
 
-    {#{{ dump(produits) }}#}
+    <h1>
+        {{ "product.title"|trans }}
+    </h1>
+
+    <h2>
+        {% trans %}
+            product.subtitle
+        {% endtrans %}
+    </h2>
+
+    <p>
+        {% set nb = 100 %}
+        {% transchoice nb %}
+            product.count
+        {% endtranschoice %}
+
+        {% transchoice produits|length %}
+            product.count
+        {% endtranschoice %}
+
+        {#autre écriture
+        {% set nb = 100 %}
+        {{ product.count|trans({'%nb%': nb}) }}
+
+        {{ product.count|trans({'%nb%': product|length}) }}#}
+    </p>
 
     <div class="row">
         <div class="col-xs-12">
@@ -18,6 +43,7 @@
                         </div>
                     </div>
                 </div><!-- /.box-header -->
+
                 <div class="box-body table-responsive no-padding">
                     <table id="produitAction" class="table table-hover">
                         <tr>

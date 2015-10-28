@@ -4,6 +4,11 @@ parameters:
     html: 5
     css: 4
 
+  genders:
+    0: Homme
+    1: Femme
+    2: Bébé
+
 services:
 #    wa_back.example:
 #        class: Wa\BackBundle\Example
@@ -16,3 +21,24 @@ services:
   wa_back.panier:
     class: Wa\BackBundle\Util\Panier
     arguments: [@doctrine.orm.entity_manager, @session]
+
+  wa.validator.position.category:
+    class: Wa\BackBundle\Validator\PositionCategoryValidator
+    arguments: [@doctrine.orm.entity_manager]
+    tags:
+    - {name: validator.constraint_validator, alias: wa_back_position_category }
+
+  wa.type.gendertype:
+    class: Wa\BackBundle\Form\Type\GenderType
+    arguments: [%genders%]
+    tags:
+      - { name: form.type, alias: gender }
+
+  wa.maintenance:
+    class: Wa\BackBundle\Listener\Maintenance
+                                      #Savoir si on est en envr de dév ou prod
+    arguments: [@twig, %maintenance%, %kernel.environment%]
+    tags:
+      #Va dans le fichier Wa\BackBundle\Listener\Maintenance et dans ce fichier Sur les événements du kernel on lui dit d'écouter l'event kernel.request
+      #Lance la méthode mise en maintenance
+      - { name: kernel.event_listener, event: kernel.request, method: miseEnMaintenance }

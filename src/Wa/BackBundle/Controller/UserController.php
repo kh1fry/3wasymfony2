@@ -5,6 +5,7 @@ namespace Wa\BackBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Wa\BackBundle\Entity\User;
 use Wa\BackBundle\Form\UserType;
 
@@ -16,7 +17,13 @@ class UserController extends Controller{
 
         //Création du formulaire
         $formUser= $this->createForm(new UserType(), $user)
-                    ->add("Créer", "submit");
+                    //Gérer les conditions générales de vente
+                    ->add('agree','checkbox', [
+                        "label" => "I agree",
+                        "constraints" => new NotBlank(),
+                        "mapped" => false //Permet d'ajouter un champ non mapé
+                    ])
+                    ->add("creer", "submit");
 
         //On récupère les data entrer dans le formulaire
         $formUser->handleRequest($request);
@@ -45,4 +52,5 @@ class UserController extends Controller{
                 "formUser"=>$formUser->createView()
             ]);
     }
+
 }

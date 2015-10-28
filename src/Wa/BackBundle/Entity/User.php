@@ -9,6 +9,9 @@ use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Wa\BackBundle\Validator\Mdp;
+
 
 /**
  * User
@@ -16,6 +19,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Table(name="user",)
  *
  * @ORM\Entity(repositoryClass="Wa\BackBundle\Repository\UserRepository")
+ * @UniqueEntity("email", message="L'email est déjà pris")
+ * @UniqueEntity("login", message="Le login est déjà pris")
  */
 class User implements UserInterface
 {
@@ -66,6 +71,7 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=250)
+     * @Mdp()
      */
     private $password;
 

@@ -1,0 +1,7 @@
+#message sur plusieurs ligne grâce au pipe "|"
+product:
+  title: Ceci est la page qui liste tous les produits
+  subtitle: Ceci est du texte
+  #Si c'est égale à 0 ou si c'est égal à 1 ou si c'est sup à 1 et inf à 20
+  count: "{0} Il n'y a pas de produit|{1} Il y a un produit|]1,20] Il y a %count% produits|]20,Inf[ Il y a beaucoup de produits"
+
